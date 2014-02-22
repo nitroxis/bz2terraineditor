@@ -14,8 +14,8 @@ namespace BZ2TerrainEditor
 		[STAThread]
 		public static void Main()
 		{
-			Terrain terrain = Terrain.Load(@"H:\Extracted\BZ2\data.pak\missions\isdf01\isdf01.ter");
-			Console.WriteLine("{0} {1}", terrain.Width, terrain.Height);
+			Terrain terrain = Terrain.Read(@"H:\Extracted\BZ2\data.pak\missions\isdf01\isdf01.ter");
+			terrain.Write(@"D:\Temp\test.ter");
 		}
 	}
 }

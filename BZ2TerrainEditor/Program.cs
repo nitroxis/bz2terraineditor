@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BZ2TerrainEditor
 {
-	static class Program
+	/// <summary>
+	/// Main class.
+	/// </summary>
+	public static class Program
 	{
 		/// <summary>
-		/// Der Haupteinstiegspunkt für die Anwendung.
+		/// Entry point.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		public static void Main()
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Editor());
+			Terrain terrain = Terrain.Load(@"H:\Extracted\BZ2\data.pak\missions\isdf01\isdf01.ter");
+			Console.WriteLine("{0} {1}", terrain.Width, terrain.Height);
 		}
 	}
 }

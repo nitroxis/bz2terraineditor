@@ -60,10 +60,24 @@ namespace BZ2TerrainEditor
 				return;
 			}
 
-			this.terrain = Terrain.Read(fileName);
-			this.initialize();
+			try
+			{
+				this.terrain = Terrain.Read(fileName);
+			}
+			catch (Exception bug)
+			{
+				MessageBox.Show(bug.ToString(), "Failed to load terrain.");
+			}
 
-			Properties.Settings.Default.OpenFileInitialDirectory = this.currentFile.DirectoryName;
+			if (this.terrain != null)
+			{
+				this.initialize();
+				Properties.Settings.Default.OpenFileInitialDirectory = this.currentFile.DirectoryName;
+			}
+			else
+			{
+				this.currentFile = null;
+			}
 		}
 
 		public Editor(Terrain terrain)
@@ -84,6 +98,11 @@ namespace BZ2TerrainEditor
 		{
 			this.free();
 
+			this.updateTitle();
+			
+			if (this.terrain == null)
+				return;
+
 			this.heightMapPreview.Image = this.generate16BitImage(this.terrain.HeightMap, this.terrain.HeightMapMin, this.terrain.HeightMapMax);
 			this.colorMapPreview.Image = this.generateColorMapImage(this.terrain.ColorMap);
 			this.normalMapPreview.Image = this.generate8BitImage(this.terrain.NormalMap);
@@ -92,8 +111,6 @@ namespace BZ2TerrainEditor
 			this.alphaMap2Preview.Image = this.generate8BitImage(this.terrain.AlphaMap2);
 			this.alphaMap3Preview.Image = this.generate8BitImage(this.terrain.AlphaMap3);
 			this.flowLayout.Enabled = true;
-
-			this.updateTitle();
 		}
 
 		/// <summary>
@@ -308,10 +325,21 @@ namespace BZ2TerrainEditor
 			{
 				if (this.terrain == null)
 				{
-					this.currentFile = new FileInfo(dialog.FileName);
-					Properties.Settings.Default.OpenFileInitialDirectory = this.currentFile.DirectoryName;
-					this.terrain = Terrain.Read(dialog.FileName);
-					this.initialize();
+					try
+					{
+						this.terrain = Terrain.Read(dialog.FileName);
+					}
+					catch (Exception bug)
+					{
+						MessageBox.Show(bug.ToString(), "Failed to load terrain.");
+					}
+
+					if (this.terrain != null)
+					{
+						this.initialize();
+						this.currentFile = new FileInfo(dialog.FileName);
+						Properties.Settings.Default.OpenFileInitialDirectory = this.currentFile.DirectoryName;
+					}
 				}
 				else
 				{
@@ -413,11 +441,10 @@ namespace BZ2TerrainEditor
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
 
 			for (int y = 0; y < data.Height; y++)
-			{
 				for (int x = 0; x < data.Width; x++)
 					terrain.HeightMap[x, y] = (short)((float)buffer[y * data.Stride + x * 3] * (float)(rangeDialog.Maximum - rangeDialog.Minimum) / 255.0f + (float)rangeDialog.Minimum);
-			}
 
+			this.changed = true;
 			this.terrain.UpdateMinMax();
 			this.initialize();
 		}
@@ -434,6 +461,70 @@ namespace BZ2TerrainEditor
 				return;
 
 			this.heightMapPreview.Image.Save(dialog.FileName);
+		}
+
+		private void heightMapImport16Bit_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			FileInfo input = new FileInfo(dialog.FileName);
+			if (input.Length < this.terrain.Width * this.terrain.Height * 2)
+			{
+				MessageBox.Show("The selected file is too small.", "Import");
+				return;
+			}
+
+			using (Stream stream = input.OpenRead())
+			{
+				byte[] row = new byte[terrain.Width * 2];
+
+				for (int y = 0; y < this.terrain.Height; y++)
+				{
+					if (stream.Read(row, 0, row.Length) < row.Length)
+						throw new Exception("Unexpected end of stream.");
+
+					for (int x = 0; x < this.terrain.Width; x++)
+						this.terrain.HeightMap[x, y] = (short)(row[x * 2] | row[x * 2 + 1] << 8);
+				}
+			}
+
+			this.changed = true;
+			this.terrain.UpdateMinMax();
+			this.initialize();
+		}
+
+		private void HeightMapExport16Bit_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			FileInfo output = new FileInfo(dialog.FileName);
+			using (Stream stream = output.Create())
+			{
+				byte[] row = new byte[terrain.Width * 2];
+				
+				for (int y = 0; y < this.terrain.Height; y++)
+				{
+					for (int x = 0; x < this.terrain.Width; x++)
+					{
+						row[x * 2 + 0] = unchecked((byte)(this.terrain.HeightMap[x, y] & 0xFF));
+						row[x * 2 + 1] = unchecked((byte)(this.terrain.HeightMap[x, y] >> 8));
+					}
+
+					stream.Write(row, 0, row.Length);
+				}
+			}
 		}
 
 		#endregion
@@ -500,7 +591,9 @@ namespace BZ2TerrainEditor
 
 		#endregion
 
+
 		#endregion
+
 		
 	}
 }

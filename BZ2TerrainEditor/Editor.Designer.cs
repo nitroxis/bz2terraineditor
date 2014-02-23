@@ -502,6 +502,7 @@
 			this.heightMapImport16Bit.Name = "heightMapImport16Bit";
 			this.heightMapImport16Bit.Size = new System.Drawing.Size(23, 22);
 			this.heightMapImport16Bit.Text = "Import 16 Bit Raw";
+			this.heightMapImport16Bit.Click += new System.EventHandler(this.heightMapImport16Bit_Click);
 			// 
 			// HeightMapExport16Bit
 			// 
@@ -511,6 +512,7 @@
 			this.HeightMapExport16Bit.Name = "HeightMapExport16Bit";
 			this.HeightMapExport16Bit.Size = new System.Drawing.Size(23, 22);
 			this.HeightMapExport16Bit.Text = "Export 16 Bit Raw";
+			this.HeightMapExport16Bit.Click += new System.EventHandler(this.HeightMapExport16Bit_Click);
 			// 
 			// heightMapPreview
 			// 

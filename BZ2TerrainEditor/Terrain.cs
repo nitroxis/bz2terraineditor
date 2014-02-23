@@ -10,21 +10,58 @@ namespace BZ2TerrainEditor
 	{
 		#region Fields
 
+		/// <summary>
+		/// The width of the terrain.
+		/// </summary>
 		public readonly int Width;
+		/// <summary>
+		/// The height of the terrain.
+		/// </summary>
 		public readonly int Height;
 
+		/// <summary>
+		/// The height map.
+		/// </summary>
 		public readonly short[,] HeightMap;
+
+		/// <summary>
+		/// The RGB color map.
+		/// </summary>
 		public readonly RGB[,] ColorMap;
+
+		/// <summary>
+		/// The normal map.
+		/// </summary>
 		public readonly byte[,] NormalMap;
+
+		/// <summary>
+		/// The alpha map for layer 1.
+		/// </summary>
 		public readonly byte[,] AlphaMap1;
+
+		/// <summary>
+		/// The alpha map for layer 2.
+		/// </summary>
 		public readonly byte[,] AlphaMap2;
+
+		/// <summary>
+		/// The alpha map for layer 3.
+		/// </summary>
 		public readonly byte[,] AlphaMap3;
+
+		/// <summary>
+		/// The cliff map?
+		/// </summary>
 		public readonly byte[,] CliffMap;
+
+		/// <summary>
+		/// Some kind of bit field.
+		/// </summary>
 		public readonly uint[,] InfoMap;
 
 		public short HeightMapLowest;
 		public short HeightMapHeighest;
-
+		
 		#endregion
 
 		#region Properties
@@ -83,7 +120,7 @@ namespace BZ2TerrainEditor
 			BinaryWriter writer = new BinaryWriter(stream);
 
 			writer.Write(0x52524554u); // 'TERR'
-			writer.Write(0x00000003u); // version?
+			writer.Write(0x00000003u); // version
 			writer.Write((ushort)(0x10000 - this.Width / 2)); // not sure what these two are.
 			writer.Write((ushort)(0x10000 - this.Height / 2)); // ^
 			writer.Write((ushort)(this.Width / 2));
@@ -221,7 +258,10 @@ namespace BZ2TerrainEditor
 			if (reader.ReadUInt32() != 0x52524554u) // 'TERR'
 				throw new Exception("Invalid magic number.");
 
-			reader.ReadUInt32(); // version?
+			int version = reader.ReadInt32();
+			if (version != 3)
+				throw new NotSupportedException(string.Format("Version {0} is not supported.", version));
+
 			reader.ReadUInt16(); // some other width?
 			reader.ReadUInt16(); // some other height?
 

@@ -529,6 +529,8 @@ namespace BZ2TerrainEditor
 
 		#endregion
 
+		#region Color Map
+
 		private void colorMapShow_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -538,6 +540,67 @@ namespace BZ2TerrainEditor
 			this.forms.Add(viewer);
 			viewer.Show();
 		}
+
+		private void colorMapImport_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
+			dialog.Filter = imageFileFilter;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			Bitmap bitmap = new Bitmap(dialog.FileName);
+
+			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
+			{
+				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+					return;
+
+				Bitmap rescaled = new Bitmap(this.terrain.Width, this.terrain.Height, bitmap.PixelFormat);
+				Graphics g = Graphics.FromImage(rescaled);
+				g.DrawImage(bitmap, 0, 0, this.terrain.Width, this.terrain.Height);
+
+				bitmap = rescaled;
+			}
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			int i = 0;
+			for (int y = 0; y < data.Height; y++)
+			{
+				for (int x = 0; x < data.Width; x++)
+				{
+					terrain.ColorMap[x, y].B = buffer[i++];
+					terrain.ColorMap[x, y].G = buffer[i++];
+					terrain.ColorMap[x, y].R = buffer[i++];
+				}	
+			}
+			
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void colorMapExport_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.Filter = imageFileFilter;
+			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			this.colorMapPreview.Image.Save(dialog.FileName);
+		}
+
+		#endregion
+
 
 		private void normalMapShow_Click(object sender, EventArgs e)
 		{
@@ -591,8 +654,8 @@ namespace BZ2TerrainEditor
 
 		#endregion
 
-
 		#endregion
+
 
 		
 	}

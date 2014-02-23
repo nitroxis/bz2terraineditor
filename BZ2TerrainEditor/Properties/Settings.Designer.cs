@@ -34,5 +34,17 @@ namespace BZ2TerrainEditor.Properties {
                 this["OpenFileInitialDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SaveFileInitialDirectory {
+            get {
+                return ((string)(this["SaveFileInitialDirectory"]));
+            }
+            set {
+                this["SaveFileInitialDirectory"] = value;
+            }
+        }
     }
 }

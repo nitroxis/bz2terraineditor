@@ -103,6 +103,8 @@
 			this.Controls.Add(this.valueSelector);
 			this.Controls.Add(this.infoLabel);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "SizeDialog";
 			this.Text = "Select size";
 			((System.ComponentModel.ISupportInitialize)(this.valueSelector)).EndInit();

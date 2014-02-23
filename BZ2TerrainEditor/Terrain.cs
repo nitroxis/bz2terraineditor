@@ -69,12 +69,22 @@ namespace BZ2TerrainEditor
 		/// </summary>
 		public readonly uint[,] InfoMap;
 
-		public short HeightMapLowest;
-		public short HeightMapHeighest;
-		
+		private short heightMapMin;
+		private short heightMapMax;
+
 		#endregion
 
 		#region Properties
+
+		public short HeightMapMin
+		{
+			get { return this.heightMapMin; }	
+		}
+
+		public short HeightMapMax
+		{
+			get { return this.heightMapMax; }
+		}
 
 		#endregion
 
@@ -102,13 +112,30 @@ namespace BZ2TerrainEditor
 
 			this.Clear();
 
-			this.HeightMapLowest = short.MaxValue;
-			this.HeightMapHeighest = short.MinValue;
+			this.heightMapMin = short.MaxValue;
+			this.heightMapMax = short.MinValue;
 		}
 
 		#endregion
 
 		#region Methods
+
+		/// <summary>
+		/// Updates the min/max values.
+		/// </summary>
+		public void UpdateMinMax()
+		{
+			this.heightMapMin = short.MaxValue;
+			this.heightMapMax = short.MinValue;
+			for (int y = 0; y < this.Height; y++)
+			{
+				for (int x = 0; x < this.Width; x++)
+				{
+					if (this.HeightMap[x, y] < this.heightMapMin) this.heightMapMin = this.HeightMap[x, y];
+					if (this.HeightMap[x, y] > this.heightMapMax) this.heightMapMax = this.HeightMap[x, y];
+				}
+			}
+		}
 
 		/// <summary>
 		/// Writes the terrain to the specified file.
@@ -268,7 +295,6 @@ namespace BZ2TerrainEditor
 			if (reader.ReadUInt32() != 0x52524554u) // 'TERR'
 				throw new Exception("Invalid magic number.");
 
-			int chunkSize;
 			int version = reader.ReadInt32();
 
 			if(version != 1 && version != 3)
@@ -293,8 +319,8 @@ namespace BZ2TerrainEditor
 						{
 							short value = reader.ReadInt16();
 							terrain.HeightMap[x + cx, y + cy] = value;
-							if (value < terrain.HeightMapLowest) terrain.HeightMapLowest = value;
-							if (value > terrain.HeightMapHeighest) terrain.HeightMapHeighest = value;
+							if (value < terrain.heightMapMin) terrain.heightMapMin = value;
+							if (value > terrain.heightMapMax) terrain.heightMapMax = value;
 						}
 						if (version == 1) reader.ReadInt16();
 					}

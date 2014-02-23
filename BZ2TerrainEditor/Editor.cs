@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,6 +16,13 @@ namespace BZ2TerrainEditor
 {
 	public partial class Editor : Form
 	{
+		#region Constants
+
+		private const string terrainFileFilter = "BZ2 terrain files (*.ter)|*.ter|All files (*.*)|*";
+		private const string imageFileFilter = "Portable Network Graphics (*.png)|*.png|Bitmap (*.bmp)|*.bmp|All Files (*.*|*";
+
+		#endregion
+
 		#region Fields
 
 		private Terrain terrain;
@@ -76,13 +84,14 @@ namespace BZ2TerrainEditor
 		{
 			this.free();
 
-			this.heightMapPreview.Image = this.generate16BitImage(this.terrain.HeightMap, this.terrain.HeightMapLowest, this.terrain.HeightMapHeighest);
+			this.heightMapPreview.Image = this.generate16BitImage(this.terrain.HeightMap, this.terrain.HeightMapMin, this.terrain.HeightMapMax);
 			this.colorMapPreview.Image = this.generateColorMapImage(this.terrain.ColorMap);
 			this.normalMapPreview.Image = this.generate8BitImage(this.terrain.NormalMap);
 			this.cellMapPreview.Image = this.generateCellTypeImage(this.terrain.CellMap);
 			this.alphaMap1Preview.Image = this.generate8BitImage(this.terrain.AlphaMap1);
 			this.alphaMap2Preview.Image = this.generate8BitImage(this.terrain.AlphaMap2);
 			this.alphaMap3Preview.Image = this.generate8BitImage(this.terrain.AlphaMap3);
+			this.flowLayout.Enabled = true;
 
 			this.updateTitle();
 		}
@@ -161,7 +170,7 @@ namespace BZ2TerrainEditor
 			}
 
 			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
 			this.imageHandles.Add(handle);
 			return bmp;
 		}
@@ -189,7 +198,7 @@ namespace BZ2TerrainEditor
 			}
 
 			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
 			this.imageHandles.Add(handle);
 			return bmp;
 		}
@@ -206,7 +215,7 @@ namespace BZ2TerrainEditor
 			{
 				for (int x = 0; x < width; x++)
 				{
-					byte color = (byte)((float)(map[x, y] - min) / (float)max * 255.0f);
+					byte color = (byte)((float)(map[x, y] - min) / (float)(max - min) * 255.0f);
 					buffer[i++] = color;
 					buffer[i++] = color;
 					buffer[i++] = color;
@@ -214,7 +223,7 @@ namespace BZ2TerrainEditor
 			}
 
 			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
 			this.imageHandles.Add(handle); 
 			return bmp;
 		}
@@ -253,7 +262,7 @@ namespace BZ2TerrainEditor
 				if (result == DialogResult.Yes)
 				{
 					SaveFileDialog dialog = new SaveFileDialog();
-					dialog.Filter = "BZ2 terrain files (*.ter)|*.ter|All files (*.*)|*";
+					dialog.Filter = terrainFileFilter;
 					if (dialog.ShowDialog() == DialogResult.OK)
 					{
 						this.terrain.Write(dialog.FileName);
@@ -293,7 +302,7 @@ namespace BZ2TerrainEditor
 		private void openTerrain(object sender, EventArgs e)
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.Filter = "BZ2 terrain files (*.ter)|*.ter|All files (*.*)|*";
+			dialog.Filter = terrainFileFilter;
 			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
@@ -333,7 +342,7 @@ namespace BZ2TerrainEditor
 				return;
 
 			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.Filter = "BZ2 terrain files (*.ter)|*.ter|All files (*.*)|*";
+			dialog.Filter = terrainFileFilter;
 			if (dialog.ShowDialog() == DialogResult.OK)
 			{
 				this.currentFile = new FileInfo(dialog.FileName);
@@ -357,7 +366,9 @@ namespace BZ2TerrainEditor
 			AboutDialog dialog = new AboutDialog();
 			dialog.ShowDialog();
 		}
-	
+
+		#region Height Map
+
 		private void heightMapShow_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -367,6 +378,65 @@ namespace BZ2TerrainEditor
 			this.forms.Add(viewer);
 			viewer.Show();
 		}
+
+		private void heightMapImport_Click(object sender, EventArgs e)
+		{
+			if(this.terrain == null)
+				return;
+
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
+			dialog.Filter = imageFileFilter;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			Bitmap bitmap = new Bitmap(dialog.FileName);
+
+			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
+			{
+				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+					return;
+
+				Bitmap rescaled = new Bitmap(this.terrain.Width, this.terrain.Height, bitmap.PixelFormat);
+				Graphics g = Graphics.FromImage(rescaled);
+				g.DrawImage(bitmap, 0, 0, this.terrain.Width, this.terrain.Height);
+
+				bitmap = rescaled;
+			}
+
+			HeightMapRangeDialog rangeDialog = new HeightMapRangeDialog();
+			if (rangeDialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+			{
+				for (int x = 0; x < data.Width; x++)
+					terrain.HeightMap[x, y] = (short)((float)buffer[y * data.Stride + x * 3] * (float)(rangeDialog.Maximum - rangeDialog.Minimum) / 255.0f + (float)rangeDialog.Minimum);
+			}
+
+			this.terrain.UpdateMinMax();
+			this.initialize();
+		}
+
+		private void heightMapExport_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.Filter = imageFileFilter;
+			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			this.heightMapPreview.Image.Save(dialog.FileName);
+		}
+
+		#endregion
 
 		private void colorMapShow_Click(object sender, EventArgs e)
 		{

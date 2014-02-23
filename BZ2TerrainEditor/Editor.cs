@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,8 @@ namespace BZ2TerrainEditor
 		private bool changed;
 
 		private List<GCHandle> imageHandles;
-		
+		private List<Form> forms;
+
 		#endregion
 
 		#region Properties
@@ -36,6 +38,7 @@ namespace BZ2TerrainEditor
 			Program.EditorInstances++;
 
 			this.imageHandles = new List<GCHandle>();
+			this.forms = new List<Form>();
 			this.updateTitle();
 		}
 
@@ -76,7 +79,7 @@ namespace BZ2TerrainEditor
 			this.heightMapPreview.Image = this.generate16BitImage(this.terrain.HeightMap, this.terrain.HeightMapLowest, this.terrain.HeightMapHeighest);
 			this.colorMapPreview.Image = this.generateColorMapImage(this.terrain.ColorMap);
 			this.normalMapPreview.Image = this.generate8BitImage(this.terrain.NormalMap);
-			this.cliffMapPreview.Image = this.generate8BitImage(this.terrain.CliffMap);
+			this.cellMapPreview.Image = this.generateCellTypeImage(this.terrain.CellMap);
 			this.alphaMap1Preview.Image = this.generate8BitImage(this.terrain.AlphaMap1);
 			this.alphaMap2Preview.Image = this.generate8BitImage(this.terrain.AlphaMap2);
 			this.alphaMap3Preview.Image = this.generate8BitImage(this.terrain.AlphaMap3);
@@ -92,16 +95,16 @@ namespace BZ2TerrainEditor
 			if (this.currentFile == null)
 			{
 				if (this.changed)
-					this.Text = "BattleZone II Terrain Editor - Unnamed *";
+					this.Text = "Unnamed * - BattleZone II Terrain Editor";
 				else
-					this.Text = "BattleZone II Terrain Editor - Unnamed";
+					this.Text = "Unnamed - BattleZone II Terrain Editor";
 			}
 			else
 			{
 				if (this.changed)
-					this.Text = string.Format("BattleZone II Terrain Editor - {0} *", this.currentFile.Name);
+					this.Text = string.Format("{0} * - BattleZone II Terrain Editor", this.currentFile.Name);
 				else
-					this.Text = string.Format("BattleZone II Terrain Editor - {0}", this.currentFile.Name);
+					this.Text = string.Format("{0} - BattleZone II Terrain Editor", this.currentFile.Name);
 			}
 		}
 
@@ -113,6 +116,30 @@ namespace BZ2TerrainEditor
 			foreach (GCHandle handle in this.imageHandles)
 				handle.Free();
 			this.imageHandles.Clear();
+		}
+
+		private Bitmap generate1BitImage(byte[,] map)
+		{
+			int width = map.GetUpperBound(0) + 1;
+			int height = map.GetUpperBound(1) + 1;
+
+			byte[] buffer = new byte[width * height * 3];
+
+			int i = 0;
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+				}
+			}
+
+			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			this.imageHandles.Add(handle);
+			return bmp;
 		}
 
 		private Bitmap generate8BitImage(byte[,] map)
@@ -130,6 +157,34 @@ namespace BZ2TerrainEditor
 					buffer[i++] = map[x, y];
 					buffer[i++] = map[x, y];
 					buffer[i++] = map[x, y];
+				}
+			}
+
+			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			this.imageHandles.Add(handle);
+			return bmp;
+		}
+
+		private Bitmap generateCellTypeImage(CellType[,] map)
+		{
+			int width = map.GetUpperBound(0) + 1;
+			int height = map.GetUpperBound(1) + 1;
+
+			byte[] buffer = new byte[width * height * 3];
+
+			int i = 0;
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					CellType type = map[x, y];
+					if (type.HasFlag(CellType.Sloped)) buffer[i] = buffer[i + 1] = buffer[i + 2] = 63;
+					if (type.HasFlag(CellType.Cliff)) buffer[i] = buffer[i + 1] = buffer[i + 2] = 127;
+					if (type.HasFlag(CellType.Water)) buffer[i] = 255;
+					if (type.HasFlag(CellType.Building)) buffer[i + 1] = 255;
+					if (type.HasFlag(CellType.Lava)) buffer[i + 2] = 255;
+					i += 3;
 				}
 			}
 
@@ -215,6 +270,9 @@ namespace BZ2TerrainEditor
 		{
 			this.free();
 
+			foreach (Form form in this.forms)
+				form.Close();
+
 			base.OnFormClosed(e);
 			Program.EditorInstances--;
 		}
@@ -289,9 +347,90 @@ namespace BZ2TerrainEditor
 			this.Close();
 		}
 
-		#endregion
+		private void menuHelpForums_Click(object sender, EventArgs e)
+		{
+			Process.Start("http://bzforum.matesfamily.org/");
+		}
+
+		private void menuHelpAbout_Click(object sender, EventArgs e)
+		{
+			AboutDialog dialog = new AboutDialog();
+			dialog.ShowDialog();
+		}
+	
+		private void heightMapShow_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.heightMapPreview.Image, "Height Map");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void colorMapShow_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.colorMapPreview.Image, "Color Map");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void normalMapShow_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.normalMapPreview.Image, "Normal Map");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void cellMapShow_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.cellMapPreview.Image, "Cell Type Map");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void alphaMap1Show_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.alphaMap1Preview.Image, "Alpha Map (Layer 1)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void alphaMap2Show_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.alphaMap2Preview.Image, "Alpha Map (Layer 2)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void alphaMap3Show_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.alphaMap3Preview.Image, "Alpha Map (Layer 3)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
 
 		#endregion
 
+		#endregion
+		
 	}
 }

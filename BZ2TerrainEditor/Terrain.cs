@@ -52,10 +52,20 @@ namespace BZ2TerrainEditor
 		/// <summary>
 		/// The cliff map?
 		/// </summary>
-		public readonly byte[,] CliffMap;
+		public readonly CellType[,] CellMap;
 
 		/// <summary>
-		/// Some kind of bit field.
+		/// Cluster info.
+		/// Bits 0-3:   Tile index for layer 0.
+		/// Bits 4-7:   Tile index for layer 1.
+		/// Bits 8-11:  Tile index for layer 2.
+		/// Bits 12-15: Tile index for layer 3.
+		/// Bit 16:     Cluster Visibility for layer 0.
+		/// Bit 17:     Cluster Visibility for layer 1.
+		/// Bit 18:     Cluster Visibility for layer 2.
+		/// Bit 19:     Cluster Visibility for layer 3.
+		/// Bits 20-23: Cluster owner team.
+		/// Bits 24-25: Cluster build type.
 		/// </summary>
 		public readonly uint[,] InfoMap;
 
@@ -87,7 +97,7 @@ namespace BZ2TerrainEditor
 			this.AlphaMap1 = new byte[width, height];
 			this.AlphaMap2 = new byte[width, height];
 			this.AlphaMap3 = new byte[width, height];
-			this.CliffMap = new byte[width, height];
+			this.CellMap = new CellType[width, height];
 			this.InfoMap = new uint[width / 4, height / 4];
 
 			this.Clear();
@@ -191,7 +201,7 @@ namespace BZ2TerrainEditor
 					{
 						for (int cx = 0; cx < 4; cx++)
 						{
-							writer.Write(this.CliffMap[x + cx, y + cy]);
+							writer.Write((byte)this.CellMap[x + cx, y + cy]);
 						}
 					}
 
@@ -214,7 +224,7 @@ namespace BZ2TerrainEditor
 					this.NormalMap[x, y] = 0;
 					this.ColorMap[x, y].R = this.ColorMap[x, y].G = this.ColorMap[x, y].B = 255;
 					this.AlphaMap1[x, y] = this.AlphaMap2[x, y] = this.AlphaMap3[x, y] = 0;
-					this.CliffMap[x, y] = 0;
+					this.CellMap[x, y] = 0;
 				}	
 			}
 
@@ -258,8 +268,10 @@ namespace BZ2TerrainEditor
 			if (reader.ReadUInt32() != 0x52524554u) // 'TERR'
 				throw new Exception("Invalid magic number.");
 
+			int chunkSize;
 			int version = reader.ReadInt32();
-			if (version != 3)
+
+			if(version != 1 && version != 3)
 				throw new NotSupportedException(string.Format("Version {0} is not supported.", version));
 
 			reader.ReadUInt16(); // some other width?
@@ -284,7 +296,9 @@ namespace BZ2TerrainEditor
 							if (value < terrain.HeightMapLowest) terrain.HeightMapLowest = value;
 							if (value > terrain.HeightMapHeighest) terrain.HeightMapHeighest = value;
 						}
+						if (version == 1) reader.ReadInt16();
 					}
+					if (version == 1) reader.ReadBytes(10);
 
 					// normal map
 					for (int cy = 0; cy < 4; cy++)
@@ -293,7 +307,9 @@ namespace BZ2TerrainEditor
 						{
 							terrain.NormalMap[x + cx, y + cy] = reader.ReadByte();
 						}
+						if (version == 1) reader.ReadByte();
 					}
+					if (version == 1) reader.ReadBytes(5);
 
 					// color map
 					for (int cy = 0; cy < 4; cy++)
@@ -304,7 +320,9 @@ namespace BZ2TerrainEditor
 							terrain.ColorMap[x + cx, y + cy].G = reader.ReadByte();
 							terrain.ColorMap[x + cx, y + cy].B = reader.ReadByte();
 						}
+						if (version == 1) reader.ReadBytes(3);
 					}
+					if (version == 1) reader.ReadBytes(15);
 
 					// alpha map 1
 					for (int cy = 0; cy < 4; cy++)
@@ -313,7 +331,9 @@ namespace BZ2TerrainEditor
 						{
 							terrain.AlphaMap1[x + cx, y + cy] = reader.ReadByte();
 						}
+						if (version == 1) reader.ReadByte();
 					}
+					if (version == 1) reader.ReadBytes(5);
 
 					// alpha map 2
 					for (int cy = 0; cy < 4; cy++)
@@ -322,7 +342,9 @@ namespace BZ2TerrainEditor
 						{
 							terrain.AlphaMap2[x + cx, y + cy] = reader.ReadByte();
 						}
+						if (version == 1) reader.ReadByte();
 					}
+					if (version == 1) reader.ReadBytes(5);
 
 					// alpha map 3
 					for (int cy = 0; cy < 4; cy++)
@@ -331,19 +353,26 @@ namespace BZ2TerrainEditor
 						{
 							terrain.AlphaMap3[x + cx, y + cy] = reader.ReadByte();
 						}
+						if (version == 1) reader.ReadByte();
 					}
+					if (version == 1) reader.ReadBytes(5);
 
 					// cliff map
 					for (int cy = 0; cy < 4; cy++)
 					{
 						for (int cx = 0; cx < 4; cx++)
 						{
-							terrain.CliffMap[x + cx, y + cy] = reader.ReadByte();
+							terrain.CellMap[x + cx, y + cy] = (CellType)reader.ReadByte();
 						}
+						if (version == 1) reader.ReadByte();
 					}
+					if (version == 1) reader.ReadBytes(5);
 
 					// info map
 					terrain.InfoMap[x / 4, y / 4] = reader.ReadUInt32();
+
+					// ???
+					if (version == 1) reader.ReadBytes(25);
 				}
 			}
 

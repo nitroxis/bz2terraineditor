@@ -38,8 +38,19 @@ namespace BZ2TerrainEditor
 
 		#region Methods
 
+		private void valueSelector_ValueChanged(object sender, EventArgs e)
+		{
+			if (this.valueSelector.Value % 4 == 0)
+				this.okButton.Enabled = true;
+			else
+				this.okButton.Enabled = false;
+		}
+
 		private void okButton_Click(object sender, EventArgs e)
 		{
+			if (this.valueSelector.Value % 4 != 0)
+				return;
+			
 			this.selectedSize = (int)this.valueSelector.Value;
 			this.DialogResult = DialogResult.OK;
 		}
@@ -50,5 +61,7 @@ namespace BZ2TerrainEditor
 		}
 
 		#endregion
+
+
 	}
 }

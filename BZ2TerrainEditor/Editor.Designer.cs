@@ -37,6 +37,9 @@
 			this.menuFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuFileSeperator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuFileExit = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuHelpForums = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
 			this.tools = new System.Windows.Forms.ToolStrip();
 			this.toolsNew = new System.Windows.Forms.ToolStripButton();
 			this.toolsOpen = new System.Windows.Forms.ToolStripButton();
@@ -45,45 +48,68 @@
 			this.heightMapGroup = new System.Windows.Forms.GroupBox();
 			this.heightMapToolbar = new System.Windows.Forms.ToolStrip();
 			this.heightMapShow = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.heightMapImport = new System.Windows.Forms.ToolStripButton();
 			this.heightMapExport = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton26 = new System.Windows.Forms.ToolStripButton();
 			this.heightMapPreview = new System.Windows.Forms.PictureBox();
 			this.colorMapGroup = new System.Windows.Forms.GroupBox();
 			this.colorMapToolbar = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+			this.colorMapShow = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.colorMapPreview = new System.Windows.Forms.PictureBox();
 			this.normalMapGroup = new System.Windows.Forms.GroupBox();
 			this.normalMapToolbar = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+			this.normalMapShow = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
 			this.normalMapPreview = new System.Windows.Forms.PictureBox();
-			this.cliffMapGroup = new System.Windows.Forms.GroupBox();
-			this.cliffMapToolbar = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-			this.cliffMapPreview = new System.Windows.Forms.PictureBox();
+			this.cellMapGroup = new System.Windows.Forms.GroupBox();
+			this.cellMapToolbar = new System.Windows.Forms.ToolStrip();
+			this.cellMapShow = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.cellMapImportWater = new System.Windows.Forms.ToolStripButton();
+			this.cellMapExportWater = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+			this.cellMapImportBuilding = new System.Windows.Forms.ToolStripButton();
+			this.cellMapExportBuilding = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+			this.cellMapImportLava = new System.Windows.Forms.ToolStripButton();
+			this.cellMapExportLava = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+			this.cellMapImportCliff = new System.Windows.Forms.ToolStripButton();
+			this.cellMapExportCliff = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+			this.cellMapImportSloped = new System.Windows.Forms.ToolStripButton();
+			this.cellMapExportSloped = new System.Windows.Forms.ToolStripButton();
+			this.cellMapPreview = new System.Windows.Forms.PictureBox();
 			this.alphaMap1Group = new System.Windows.Forms.GroupBox();
 			this.alphaMap1Toolbar = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
+			this.alphaMap1Show = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
 			this.alphaMap1Preview = new System.Windows.Forms.PictureBox();
 			this.alphaMap2Group = new System.Windows.Forms.GroupBox();
 			this.alphaMap2Toolbar = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
+			this.alphaMap2Show = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
 			this.alphaMap2Preview = new System.Windows.Forms.PictureBox();
 			this.alphaMap3Group = new System.Windows.Forms.GroupBox();
 			this.alphaMap3Toolbar = new System.Windows.Forms.ToolStrip();
-			this.toolStripButton18 = new System.Windows.Forms.ToolStripButton();
+			this.alphaMap3Show = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButton16 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton17 = new System.Windows.Forms.ToolStripButton();
 			this.alphaMap3Preview = new System.Windows.Forms.PictureBox();
+			this.flowLayout = new System.Windows.Forms.FlowLayoutPanel();
 			this.menu.SuspendLayout();
 			this.tools.SuspendLayout();
 			this.heightMapGroup.SuspendLayout();
@@ -95,9 +121,9 @@
 			this.normalMapGroup.SuspendLayout();
 			this.normalMapToolbar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.normalMapPreview)).BeginInit();
-			this.cliffMapGroup.SuspendLayout();
-			this.cliffMapToolbar.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.cliffMapPreview)).BeginInit();
+			this.cellMapGroup.SuspendLayout();
+			this.cellMapToolbar.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.cellMapPreview)).BeginInit();
 			this.alphaMap1Group.SuspendLayout();
 			this.alphaMap1Toolbar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.alphaMap1Preview)).BeginInit();
@@ -107,15 +133,17 @@
 			this.alphaMap3Group.SuspendLayout();
 			this.alphaMap3Toolbar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.alphaMap3Preview)).BeginInit();
+			this.flowLayout.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menu
 			// 
 			this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuFile});
+            this.menuFile,
+            this.menuHelp});
 			this.menu.Location = new System.Drawing.Point(0, 0);
 			this.menu.Name = "menu";
-			this.menu.Size = new System.Drawing.Size(1110, 24);
+			this.menu.Size = new System.Drawing.Size(1232, 24);
 			this.menu.TabIndex = 0;
 			this.menu.Text = "mainMenu";
 			// 
@@ -177,6 +205,30 @@
 			this.menuFileExit.Text = "&Exit";
 			this.menuFileExit.Click += new System.EventHandler(this.menuFileExit_Click);
 			// 
+			// menuHelp
+			// 
+			this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelpForums,
+            this.menuHelpAbout});
+			this.menuHelp.Name = "menuHelp";
+			this.menuHelp.Size = new System.Drawing.Size(44, 20);
+			this.menuHelp.Text = "&Help";
+			// 
+			// menuHelpForums
+			// 
+			this.menuHelpForums.Name = "menuHelpForums";
+			this.menuHelpForums.Size = new System.Drawing.Size(152, 22);
+			this.menuHelpForums.Text = "&BZ2 Forums";
+			this.menuHelpForums.Click += new System.EventHandler(this.menuHelpForums_Click);
+			// 
+			// menuHelpAbout
+			// 
+			this.menuHelpAbout.Image = global::BZ2TerrainEditor.Properties.Resources.information;
+			this.menuHelpAbout.Name = "menuHelpAbout";
+			this.menuHelpAbout.Size = new System.Drawing.Size(152, 22);
+			this.menuHelpAbout.Text = "&About";
+			this.menuHelpAbout.Click += new System.EventHandler(this.menuHelpAbout_Click);
+			// 
 			// tools
 			// 
 			this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -187,7 +239,7 @@
             this.toolsSaveAs});
 			this.tools.Location = new System.Drawing.Point(0, 24);
 			this.tools.Name = "tools";
-			this.tools.Size = new System.Drawing.Size(1110, 25);
+			this.tools.Size = new System.Drawing.Size(1232, 25);
 			this.tools.TabIndex = 9;
 			this.tools.Text = "toolStrip1";
 			// 
@@ -235,9 +287,9 @@
 			// 
 			this.heightMapGroup.Controls.Add(this.heightMapToolbar);
 			this.heightMapGroup.Controls.Add(this.heightMapPreview);
-			this.heightMapGroup.Location = new System.Drawing.Point(12, 52);
+			this.heightMapGroup.Location = new System.Drawing.Point(3, 3);
 			this.heightMapGroup.Name = "heightMapGroup";
-			this.heightMapGroup.Size = new System.Drawing.Size(268, 306);
+			this.heightMapGroup.Size = new System.Drawing.Size(296, 334);
 			this.heightMapGroup.TabIndex = 10;
 			this.heightMapGroup.TabStop = false;
 			this.heightMapGroup.Text = "Height Map";
@@ -247,11 +299,15 @@
 			this.heightMapToolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.heightMapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.heightMapShow,
+            this.toolStripSeparator2,
             this.heightMapImport,
-            this.heightMapExport});
+            this.heightMapExport,
+            this.toolStripSeparator11,
+            this.toolStripButton25,
+            this.toolStripButton26});
 			this.heightMapToolbar.Location = new System.Drawing.Point(3, 16);
 			this.heightMapToolbar.Name = "heightMapToolbar";
-			this.heightMapToolbar.Size = new System.Drawing.Size(262, 25);
+			this.heightMapToolbar.Size = new System.Drawing.Size(290, 25);
 			this.heightMapToolbar.TabIndex = 2;
 			this.heightMapToolbar.Text = "toolStrip2";
 			// 
@@ -263,6 +319,12 @@
 			this.heightMapShow.Name = "heightMapShow";
 			this.heightMapShow.Size = new System.Drawing.Size(23, 22);
 			this.heightMapShow.Text = "Show";
+			this.heightMapShow.Click += new System.EventHandler(this.heightMapShow_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// heightMapImport
 			// 
@@ -282,23 +344,50 @@
 			this.heightMapExport.Size = new System.Drawing.Size(23, 22);
 			this.heightMapExport.Text = "Export";
 			// 
+			// toolStripSeparator11
+			// 
+			this.toolStripSeparator11.Name = "toolStripSeparator11";
+			this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripButton25
+			// 
+			this.toolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton25.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton25.Image")));
+			this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton25.Name = "toolStripButton25";
+			this.toolStripButton25.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton25.Text = "toolStripButton25";
+			// 
+			// toolStripButton26
+			// 
+			this.toolStripButton26.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton26.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton26.Image")));
+			this.toolStripButton26.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton26.Name = "toolStripButton26";
+			this.toolStripButton26.Size = new System.Drawing.Size(23, 22);
+			this.toolStripButton26.Text = "toolStripButton26";
+			// 
 			// heightMapPreview
 			// 
+			this.heightMapPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.heightMapPreview.BackColor = System.Drawing.Color.Black;
 			this.heightMapPreview.Location = new System.Drawing.Point(6, 44);
 			this.heightMapPreview.Name = "heightMapPreview";
-			this.heightMapPreview.Size = new System.Drawing.Size(256, 256);
+			this.heightMapPreview.Size = new System.Drawing.Size(284, 284);
 			this.heightMapPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.heightMapPreview.TabIndex = 1;
 			this.heightMapPreview.TabStop = false;
+			this.heightMapPreview.Click += new System.EventHandler(this.heightMapShow_Click);
 			// 
 			// colorMapGroup
 			// 
 			this.colorMapGroup.Controls.Add(this.colorMapToolbar);
 			this.colorMapGroup.Controls.Add(this.colorMapPreview);
-			this.colorMapGroup.Location = new System.Drawing.Point(286, 52);
+			this.colorMapGroup.Location = new System.Drawing.Point(305, 3);
 			this.colorMapGroup.Name = "colorMapGroup";
-			this.colorMapGroup.Size = new System.Drawing.Size(268, 306);
+			this.colorMapGroup.Size = new System.Drawing.Size(296, 334);
 			this.colorMapGroup.TabIndex = 10;
 			this.colorMapGroup.TabStop = false;
 			this.colorMapGroup.Text = "Color Map";
@@ -307,23 +396,30 @@
 			// 
 			this.colorMapToolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.colorMapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton3,
+            this.colorMapShow,
+            this.toolStripSeparator3,
             this.toolStripButton1,
             this.toolStripButton2});
 			this.colorMapToolbar.Location = new System.Drawing.Point(3, 16);
 			this.colorMapToolbar.Name = "colorMapToolbar";
-			this.colorMapToolbar.Size = new System.Drawing.Size(262, 25);
+			this.colorMapToolbar.Size = new System.Drawing.Size(290, 25);
 			this.colorMapToolbar.TabIndex = 2;
 			this.colorMapToolbar.Text = "toolStrip2";
 			// 
-			// toolStripButton3
+			// colorMapShow
 			// 
-			this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-			this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton3.Name = "toolStripButton3";
-			this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton3.Text = "Show";
+			this.colorMapShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.colorMapShow.Image = ((System.Drawing.Image)(resources.GetObject("colorMapShow.Image")));
+			this.colorMapShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.colorMapShow.Name = "colorMapShow";
+			this.colorMapShow.Size = new System.Drawing.Size(23, 22);
+			this.colorMapShow.Text = "Show";
+			this.colorMapShow.Click += new System.EventHandler(this.colorMapShow_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStripButton1
 			// 
@@ -345,21 +441,25 @@
 			// 
 			// colorMapPreview
 			// 
+			this.colorMapPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.colorMapPreview.BackColor = System.Drawing.Color.Black;
 			this.colorMapPreview.Location = new System.Drawing.Point(6, 44);
 			this.colorMapPreview.Name = "colorMapPreview";
-			this.colorMapPreview.Size = new System.Drawing.Size(256, 256);
+			this.colorMapPreview.Size = new System.Drawing.Size(284, 284);
 			this.colorMapPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.colorMapPreview.TabIndex = 1;
 			this.colorMapPreview.TabStop = false;
+			this.colorMapPreview.Click += new System.EventHandler(this.colorMapShow_Click);
 			// 
 			// normalMapGroup
 			// 
 			this.normalMapGroup.Controls.Add(this.normalMapToolbar);
 			this.normalMapGroup.Controls.Add(this.normalMapPreview);
-			this.normalMapGroup.Location = new System.Drawing.Point(560, 52);
+			this.normalMapGroup.Location = new System.Drawing.Point(607, 3);
 			this.normalMapGroup.Name = "normalMapGroup";
-			this.normalMapGroup.Size = new System.Drawing.Size(268, 306);
+			this.normalMapGroup.Size = new System.Drawing.Size(296, 334);
 			this.normalMapGroup.TabIndex = 10;
 			this.normalMapGroup.TabStop = false;
 			this.normalMapGroup.Text = "Normal Map";
@@ -368,23 +468,30 @@
 			// 
 			this.normalMapToolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.normalMapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton6,
+            this.normalMapShow,
+            this.toolStripSeparator4,
             this.toolStripButton4,
             this.toolStripButton5});
 			this.normalMapToolbar.Location = new System.Drawing.Point(3, 16);
 			this.normalMapToolbar.Name = "normalMapToolbar";
-			this.normalMapToolbar.Size = new System.Drawing.Size(262, 25);
+			this.normalMapToolbar.Size = new System.Drawing.Size(290, 25);
 			this.normalMapToolbar.TabIndex = 2;
 			this.normalMapToolbar.Text = "toolStrip2";
 			// 
-			// toolStripButton6
+			// normalMapShow
 			// 
-			this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-			this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton6.Name = "toolStripButton6";
-			this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton6.Text = "Show";
+			this.normalMapShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.normalMapShow.Image = ((System.Drawing.Image)(resources.GetObject("normalMapShow.Image")));
+			this.normalMapShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.normalMapShow.Name = "normalMapShow";
+			this.normalMapShow.Size = new System.Drawing.Size(23, 22);
+			this.normalMapShow.Text = "Show";
+			this.normalMapShow.Click += new System.EventHandler(this.normalMapShow_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStripButton4
 			// 
@@ -406,82 +513,201 @@
 			// 
 			// normalMapPreview
 			// 
+			this.normalMapPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.normalMapPreview.BackColor = System.Drawing.Color.Black;
 			this.normalMapPreview.Location = new System.Drawing.Point(6, 44);
 			this.normalMapPreview.Name = "normalMapPreview";
-			this.normalMapPreview.Size = new System.Drawing.Size(256, 256);
+			this.normalMapPreview.Size = new System.Drawing.Size(284, 284);
 			this.normalMapPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.normalMapPreview.TabIndex = 1;
 			this.normalMapPreview.TabStop = false;
+			this.normalMapPreview.Click += new System.EventHandler(this.normalMapShow_Click);
 			// 
-			// cliffMapGroup
+			// cellMapGroup
 			// 
-			this.cliffMapGroup.Controls.Add(this.cliffMapToolbar);
-			this.cliffMapGroup.Controls.Add(this.cliffMapPreview);
-			this.cliffMapGroup.Location = new System.Drawing.Point(834, 52);
-			this.cliffMapGroup.Name = "cliffMapGroup";
-			this.cliffMapGroup.Size = new System.Drawing.Size(268, 306);
-			this.cliffMapGroup.TabIndex = 10;
-			this.cliffMapGroup.TabStop = false;
-			this.cliffMapGroup.Text = "Cliff Map";
+			this.cellMapGroup.Controls.Add(this.cellMapToolbar);
+			this.cellMapGroup.Controls.Add(this.cellMapPreview);
+			this.cellMapGroup.Location = new System.Drawing.Point(909, 3);
+			this.cellMapGroup.Name = "cellMapGroup";
+			this.cellMapGroup.Size = new System.Drawing.Size(296, 334);
+			this.cellMapGroup.TabIndex = 10;
+			this.cellMapGroup.TabStop = false;
+			this.cellMapGroup.Text = "Cell Type Map";
 			// 
-			// cliffMapToolbar
+			// cellMapToolbar
 			// 
-			this.cliffMapToolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-			this.cliffMapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton9,
-            this.toolStripButton7,
-            this.toolStripButton8});
-			this.cliffMapToolbar.Location = new System.Drawing.Point(3, 16);
-			this.cliffMapToolbar.Name = "cliffMapToolbar";
-			this.cliffMapToolbar.Size = new System.Drawing.Size(262, 25);
-			this.cliffMapToolbar.TabIndex = 2;
-			this.cliffMapToolbar.Text = "toolStrip2";
+			this.cellMapToolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+			this.cellMapToolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cellMapShow,
+            this.toolStripSeparator12,
+            this.cellMapImportCliff,
+            this.cellMapExportCliff,
+            this.toolStripSeparator1,
+            this.cellMapImportWater,
+            this.cellMapExportWater,
+            this.toolStripSeparator8,
+            this.cellMapImportBuilding,
+            this.cellMapExportBuilding,
+            this.toolStripSeparator9,
+            this.cellMapImportLava,
+            this.cellMapExportLava,
+            this.toolStripSeparator10,
+            this.cellMapImportSloped,
+            this.cellMapExportSloped});
+			this.cellMapToolbar.Location = new System.Drawing.Point(3, 16);
+			this.cellMapToolbar.Name = "cellMapToolbar";
+			this.cellMapToolbar.Size = new System.Drawing.Size(290, 25);
+			this.cellMapToolbar.TabIndex = 2;
+			this.cellMapToolbar.Text = "toolStrip2";
 			// 
-			// toolStripButton9
+			// cellMapShow
 			// 
-			this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
-			this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton9.Name = "toolStripButton9";
-			this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton9.Text = "Show";
+			this.cellMapShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapShow.Image = ((System.Drawing.Image)(resources.GetObject("cellMapShow.Image")));
+			this.cellMapShow.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapShow.Name = "cellMapShow";
+			this.cellMapShow.Size = new System.Drawing.Size(23, 22);
+			this.cellMapShow.Text = "Show";
+			this.cellMapShow.Click += new System.EventHandler(this.cellMapShow_Click);
 			// 
-			// toolStripButton7
+			// toolStripSeparator1
 			// 
-			this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
-			this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton7.Name = "toolStripButton7";
-			this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton7.Text = "Import";
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
 			// 
-			// toolStripButton8
+			// cellMapImportWater
 			// 
-			this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
-			this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton8.Name = "toolStripButton8";
-			this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton8.Text = "Export";
+			this.cellMapImportWater.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapImportWater.Image = global::BZ2TerrainEditor.Properties.Resources.water_import;
+			this.cellMapImportWater.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapImportWater.Name = "cellMapImportWater";
+			this.cellMapImportWater.Size = new System.Drawing.Size(23, 22);
+			this.cellMapImportWater.Text = "Import Water Bitmap";
 			// 
-			// cliffMapPreview
+			// cellMapExportWater
 			// 
-			this.cliffMapPreview.BackColor = System.Drawing.Color.Black;
-			this.cliffMapPreview.Location = new System.Drawing.Point(6, 44);
-			this.cliffMapPreview.Name = "cliffMapPreview";
-			this.cliffMapPreview.Size = new System.Drawing.Size(256, 256);
-			this.cliffMapPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-			this.cliffMapPreview.TabIndex = 1;
-			this.cliffMapPreview.TabStop = false;
+			this.cellMapExportWater.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapExportWater.Image = global::BZ2TerrainEditor.Properties.Resources.water_export;
+			this.cellMapExportWater.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapExportWater.Name = "cellMapExportWater";
+			this.cellMapExportWater.Size = new System.Drawing.Size(23, 22);
+			this.cellMapExportWater.Text = "Export Water Bitmap";
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+			// 
+			// cellMapImportBuilding
+			// 
+			this.cellMapImportBuilding.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapImportBuilding.Image = global::BZ2TerrainEditor.Properties.Resources.building_import;
+			this.cellMapImportBuilding.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapImportBuilding.Name = "cellMapImportBuilding";
+			this.cellMapImportBuilding.Size = new System.Drawing.Size(23, 22);
+			this.cellMapImportBuilding.Text = "Import Building Bitmap";
+			// 
+			// cellMapExportBuilding
+			// 
+			this.cellMapExportBuilding.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapExportBuilding.Image = global::BZ2TerrainEditor.Properties.Resources.building_export;
+			this.cellMapExportBuilding.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapExportBuilding.Name = "cellMapExportBuilding";
+			this.cellMapExportBuilding.Size = new System.Drawing.Size(23, 22);
+			this.cellMapExportBuilding.Text = "Export Building Bitmap";
+			// 
+			// toolStripSeparator9
+			// 
+			this.toolStripSeparator9.Name = "toolStripSeparator9";
+			this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+			// 
+			// cellMapImportLava
+			// 
+			this.cellMapImportLava.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapImportLava.Image = global::BZ2TerrainEditor.Properties.Resources.fire_import;
+			this.cellMapImportLava.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapImportLava.Name = "cellMapImportLava";
+			this.cellMapImportLava.Size = new System.Drawing.Size(23, 22);
+			this.cellMapImportLava.Text = "Import Lava Bitmap";
+			// 
+			// cellMapExportLava
+			// 
+			this.cellMapExportLava.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapExportLava.Image = global::BZ2TerrainEditor.Properties.Resources.fire_export;
+			this.cellMapExportLava.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapExportLava.Name = "cellMapExportLava";
+			this.cellMapExportLava.Size = new System.Drawing.Size(23, 22);
+			this.cellMapExportLava.Text = "Export Lava Bitmap";
+			// 
+			// toolStripSeparator10
+			// 
+			this.toolStripSeparator10.Name = "toolStripSeparator10";
+			this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
+			// 
+			// cellMapImportCliff
+			// 
+			this.cellMapImportCliff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapImportCliff.Image = ((System.Drawing.Image)(resources.GetObject("cellMapImportCliff.Image")));
+			this.cellMapImportCliff.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapImportCliff.Name = "cellMapImportCliff";
+			this.cellMapImportCliff.Size = new System.Drawing.Size(23, 22);
+			this.cellMapImportCliff.Text = "Import Cliff Bitmap";
+			// 
+			// cellMapExportCliff
+			// 
+			this.cellMapExportCliff.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapExportCliff.Image = ((System.Drawing.Image)(resources.GetObject("cellMapExportCliff.Image")));
+			this.cellMapExportCliff.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapExportCliff.Name = "cellMapExportCliff";
+			this.cellMapExportCliff.Size = new System.Drawing.Size(23, 22);
+			this.cellMapExportCliff.Text = "Export Cliff Bitmap";
+			// 
+			// toolStripSeparator12
+			// 
+			this.toolStripSeparator12.Name = "toolStripSeparator12";
+			this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+			// 
+			// cellMapImportSloped
+			// 
+			this.cellMapImportSloped.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapImportSloped.Image = ((System.Drawing.Image)(resources.GetObject("cellMapImportSloped.Image")));
+			this.cellMapImportSloped.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapImportSloped.Name = "cellMapImportSloped";
+			this.cellMapImportSloped.Size = new System.Drawing.Size(23, 22);
+			this.cellMapImportSloped.Text = "Import Sloped Surface Bitmap";
+			// 
+			// cellMapExportSloped
+			// 
+			this.cellMapExportSloped.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.cellMapExportSloped.Image = ((System.Drawing.Image)(resources.GetObject("cellMapExportSloped.Image")));
+			this.cellMapExportSloped.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.cellMapExportSloped.Name = "cellMapExportSloped";
+			this.cellMapExportSloped.Size = new System.Drawing.Size(23, 20);
+			this.cellMapExportSloped.Text = "Export Sloped Surface Bitmap";
+			// 
+			// cellMapPreview
+			// 
+			this.cellMapPreview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.cellMapPreview.BackColor = System.Drawing.Color.Black;
+			this.cellMapPreview.Location = new System.Drawing.Point(6, 44);
+			this.cellMapPreview.Name = "cellMapPreview";
+			this.cellMapPreview.Size = new System.Drawing.Size(284, 284);
+			this.cellMapPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.cellMapPreview.TabIndex = 1;
+			this.cellMapPreview.TabStop = false;
+			this.cellMapPreview.Click += new System.EventHandler(this.cellMapShow_Click);
 			// 
 			// alphaMap1Group
 			// 
 			this.alphaMap1Group.Controls.Add(this.alphaMap1Toolbar);
 			this.alphaMap1Group.Controls.Add(this.alphaMap1Preview);
-			this.alphaMap1Group.Location = new System.Drawing.Point(12, 364);
+			this.alphaMap1Group.Location = new System.Drawing.Point(3, 343);
 			this.alphaMap1Group.Name = "alphaMap1Group";
-			this.alphaMap1Group.Size = new System.Drawing.Size(268, 306);
+			this.alphaMap1Group.Size = new System.Drawing.Size(296, 334);
 			this.alphaMap1Group.TabIndex = 10;
 			this.alphaMap1Group.TabStop = false;
 			this.alphaMap1Group.Text = "Alpha Map (Layer 1)";
@@ -490,23 +716,30 @@
 			// 
 			this.alphaMap1Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.alphaMap1Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton12,
+            this.alphaMap1Show,
+            this.toolStripSeparator7,
             this.toolStripButton10,
             this.toolStripButton11});
 			this.alphaMap1Toolbar.Location = new System.Drawing.Point(3, 16);
 			this.alphaMap1Toolbar.Name = "alphaMap1Toolbar";
-			this.alphaMap1Toolbar.Size = new System.Drawing.Size(262, 25);
+			this.alphaMap1Toolbar.Size = new System.Drawing.Size(290, 25);
 			this.alphaMap1Toolbar.TabIndex = 2;
 			this.alphaMap1Toolbar.Text = "toolStrip2";
 			// 
-			// toolStripButton12
+			// alphaMap1Show
 			// 
-			this.toolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton12.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton12.Image")));
-			this.toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton12.Name = "toolStripButton12";
-			this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton12.Text = "Show";
+			this.alphaMap1Show.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.alphaMap1Show.Image = ((System.Drawing.Image)(resources.GetObject("alphaMap1Show.Image")));
+			this.alphaMap1Show.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.alphaMap1Show.Name = "alphaMap1Show";
+			this.alphaMap1Show.Size = new System.Drawing.Size(23, 22);
+			this.alphaMap1Show.Text = "Show";
+			this.alphaMap1Show.Click += new System.EventHandler(this.alphaMap1Show_Click);
+			// 
+			// toolStripSeparator7
+			// 
+			this.toolStripSeparator7.Name = "toolStripSeparator7";
+			this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStripButton10
 			// 
@@ -528,21 +761,25 @@
 			// 
 			// alphaMap1Preview
 			// 
+			this.alphaMap1Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.alphaMap1Preview.BackColor = System.Drawing.Color.Black;
 			this.alphaMap1Preview.Location = new System.Drawing.Point(6, 44);
 			this.alphaMap1Preview.Name = "alphaMap1Preview";
-			this.alphaMap1Preview.Size = new System.Drawing.Size(256, 256);
+			this.alphaMap1Preview.Size = new System.Drawing.Size(284, 284);
 			this.alphaMap1Preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.alphaMap1Preview.TabIndex = 1;
 			this.alphaMap1Preview.TabStop = false;
+			this.alphaMap1Preview.Click += new System.EventHandler(this.alphaMap1Show_Click);
 			// 
 			// alphaMap2Group
 			// 
 			this.alphaMap2Group.Controls.Add(this.alphaMap2Toolbar);
 			this.alphaMap2Group.Controls.Add(this.alphaMap2Preview);
-			this.alphaMap2Group.Location = new System.Drawing.Point(286, 364);
+			this.alphaMap2Group.Location = new System.Drawing.Point(305, 343);
 			this.alphaMap2Group.Name = "alphaMap2Group";
-			this.alphaMap2Group.Size = new System.Drawing.Size(268, 306);
+			this.alphaMap2Group.Size = new System.Drawing.Size(296, 334);
 			this.alphaMap2Group.TabIndex = 10;
 			this.alphaMap2Group.TabStop = false;
 			this.alphaMap2Group.Text = "Alpha Map (Layer 2)";
@@ -551,23 +788,30 @@
 			// 
 			this.alphaMap2Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.alphaMap2Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton15,
+            this.alphaMap2Show,
+            this.toolStripSeparator6,
             this.toolStripButton13,
             this.toolStripButton14});
 			this.alphaMap2Toolbar.Location = new System.Drawing.Point(3, 16);
 			this.alphaMap2Toolbar.Name = "alphaMap2Toolbar";
-			this.alphaMap2Toolbar.Size = new System.Drawing.Size(262, 25);
+			this.alphaMap2Toolbar.Size = new System.Drawing.Size(290, 25);
 			this.alphaMap2Toolbar.TabIndex = 2;
 			this.alphaMap2Toolbar.Text = "toolStrip2";
 			// 
-			// toolStripButton15
+			// alphaMap2Show
 			// 
-			this.toolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton15.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton15.Image")));
-			this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton15.Name = "toolStripButton15";
-			this.toolStripButton15.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton15.Text = "Show";
+			this.alphaMap2Show.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.alphaMap2Show.Image = ((System.Drawing.Image)(resources.GetObject("alphaMap2Show.Image")));
+			this.alphaMap2Show.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.alphaMap2Show.Name = "alphaMap2Show";
+			this.alphaMap2Show.Size = new System.Drawing.Size(23, 22);
+			this.alphaMap2Show.Text = "Show";
+			this.alphaMap2Show.Click += new System.EventHandler(this.alphaMap2Show_Click);
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStripButton13
 			// 
@@ -589,21 +833,25 @@
 			// 
 			// alphaMap2Preview
 			// 
+			this.alphaMap2Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.alphaMap2Preview.BackColor = System.Drawing.Color.Black;
 			this.alphaMap2Preview.Location = new System.Drawing.Point(6, 44);
 			this.alphaMap2Preview.Name = "alphaMap2Preview";
-			this.alphaMap2Preview.Size = new System.Drawing.Size(256, 256);
+			this.alphaMap2Preview.Size = new System.Drawing.Size(284, 284);
 			this.alphaMap2Preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.alphaMap2Preview.TabIndex = 1;
 			this.alphaMap2Preview.TabStop = false;
+			this.alphaMap2Preview.Click += new System.EventHandler(this.alphaMap2Show_Click);
 			// 
 			// alphaMap3Group
 			// 
 			this.alphaMap3Group.Controls.Add(this.alphaMap3Toolbar);
 			this.alphaMap3Group.Controls.Add(this.alphaMap3Preview);
-			this.alphaMap3Group.Location = new System.Drawing.Point(560, 364);
+			this.alphaMap3Group.Location = new System.Drawing.Point(607, 343);
 			this.alphaMap3Group.Name = "alphaMap3Group";
-			this.alphaMap3Group.Size = new System.Drawing.Size(268, 306);
+			this.alphaMap3Group.Size = new System.Drawing.Size(296, 334);
 			this.alphaMap3Group.TabIndex = 10;
 			this.alphaMap3Group.TabStop = false;
 			this.alphaMap3Group.Text = "Alpha Map (Layer 3)";
@@ -612,23 +860,30 @@
 			// 
 			this.alphaMap3Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.alphaMap3Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton18,
+            this.alphaMap3Show,
+            this.toolStripSeparator5,
             this.toolStripButton16,
             this.toolStripButton17});
 			this.alphaMap3Toolbar.Location = new System.Drawing.Point(3, 16);
 			this.alphaMap3Toolbar.Name = "alphaMap3Toolbar";
-			this.alphaMap3Toolbar.Size = new System.Drawing.Size(262, 25);
+			this.alphaMap3Toolbar.Size = new System.Drawing.Size(290, 25);
 			this.alphaMap3Toolbar.TabIndex = 2;
 			this.alphaMap3Toolbar.Text = "toolStrip2";
 			// 
-			// toolStripButton18
+			// alphaMap3Show
 			// 
-			this.toolStripButton18.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton18.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton18.Image")));
-			this.toolStripButton18.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton18.Name = "toolStripButton18";
-			this.toolStripButton18.Size = new System.Drawing.Size(23, 22);
-			this.toolStripButton18.Text = "Show";
+			this.alphaMap3Show.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.alphaMap3Show.Image = ((System.Drawing.Image)(resources.GetObject("alphaMap3Show.Image")));
+			this.alphaMap3Show.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.alphaMap3Show.Name = "alphaMap3Show";
+			this.alphaMap3Show.Size = new System.Drawing.Size(23, 22);
+			this.alphaMap3Show.Text = "Show";
+			this.alphaMap3Show.Click += new System.EventHandler(this.alphaMap3Show_Click);
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
 			// 
 			// toolStripButton16
 			// 
@@ -650,29 +905,44 @@
 			// 
 			// alphaMap3Preview
 			// 
+			this.alphaMap3Preview.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.alphaMap3Preview.BackColor = System.Drawing.Color.Black;
 			this.alphaMap3Preview.Location = new System.Drawing.Point(6, 44);
 			this.alphaMap3Preview.Name = "alphaMap3Preview";
-			this.alphaMap3Preview.Size = new System.Drawing.Size(256, 256);
+			this.alphaMap3Preview.Size = new System.Drawing.Size(284, 284);
 			this.alphaMap3Preview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
 			this.alphaMap3Preview.TabIndex = 1;
 			this.alphaMap3Preview.TabStop = false;
+			this.alphaMap3Preview.Click += new System.EventHandler(this.alphaMap3Show_Click);
+			// 
+			// flowLayout
+			// 
+			this.flowLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.flowLayout.AutoScroll = true;
+			this.flowLayout.Controls.Add(this.heightMapGroup);
+			this.flowLayout.Controls.Add(this.colorMapGroup);
+			this.flowLayout.Controls.Add(this.normalMapGroup);
+			this.flowLayout.Controls.Add(this.cellMapGroup);
+			this.flowLayout.Controls.Add(this.alphaMap1Group);
+			this.flowLayout.Controls.Add(this.alphaMap2Group);
+			this.flowLayout.Controls.Add(this.alphaMap3Group);
+			this.flowLayout.Location = new System.Drawing.Point(12, 52);
+			this.flowLayout.Name = "flowLayout";
+			this.flowLayout.Size = new System.Drawing.Size(1208, 680);
+			this.flowLayout.TabIndex = 11;
 			// 
 			// Editor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1110, 682);
-			this.Controls.Add(this.cliffMapGroup);
-			this.Controls.Add(this.normalMapGroup);
-			this.Controls.Add(this.colorMapGroup);
-			this.Controls.Add(this.alphaMap3Group);
-			this.Controls.Add(this.alphaMap2Group);
-			this.Controls.Add(this.alphaMap1Group);
-			this.Controls.Add(this.heightMapGroup);
+			this.ClientSize = new System.Drawing.Size(1232, 744);
+			this.Controls.Add(this.flowLayout);
 			this.Controls.Add(this.tools);
 			this.Controls.Add(this.menu);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menu;
 			this.MaximizeBox = false;
@@ -697,11 +967,11 @@
 			this.normalMapToolbar.ResumeLayout(false);
 			this.normalMapToolbar.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.normalMapPreview)).EndInit();
-			this.cliffMapGroup.ResumeLayout(false);
-			this.cliffMapGroup.PerformLayout();
-			this.cliffMapToolbar.ResumeLayout(false);
-			this.cliffMapToolbar.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.cliffMapPreview)).EndInit();
+			this.cellMapGroup.ResumeLayout(false);
+			this.cellMapGroup.PerformLayout();
+			this.cellMapToolbar.ResumeLayout(false);
+			this.cellMapToolbar.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.cellMapPreview)).EndInit();
 			this.alphaMap1Group.ResumeLayout(false);
 			this.alphaMap1Group.PerformLayout();
 			this.alphaMap1Toolbar.ResumeLayout(false);
@@ -717,6 +987,7 @@
 			this.alphaMap3Toolbar.ResumeLayout(false);
 			this.alphaMap3Toolbar.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.alphaMap3Preview)).EndInit();
+			this.flowLayout.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -743,41 +1014,67 @@
 		private System.Windows.Forms.ToolStrip colorMapToolbar;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
-		private System.Windows.Forms.ToolStripButton toolStripButton3;
+		private System.Windows.Forms.ToolStripButton colorMapShow;
 		private System.Windows.Forms.PictureBox colorMapPreview;
 		private System.Windows.Forms.GroupBox normalMapGroup;
 		private System.Windows.Forms.ToolStrip normalMapToolbar;
 		private System.Windows.Forms.ToolStripButton toolStripButton4;
 		private System.Windows.Forms.ToolStripButton toolStripButton5;
-		private System.Windows.Forms.ToolStripButton toolStripButton6;
+		private System.Windows.Forms.ToolStripButton normalMapShow;
 		private System.Windows.Forms.PictureBox normalMapPreview;
-		private System.Windows.Forms.GroupBox cliffMapGroup;
-		private System.Windows.Forms.ToolStrip cliffMapToolbar;
-		private System.Windows.Forms.ToolStripButton toolStripButton7;
-		private System.Windows.Forms.ToolStripButton toolStripButton8;
-		private System.Windows.Forms.ToolStripButton toolStripButton9;
-		private System.Windows.Forms.PictureBox cliffMapPreview;
+		private System.Windows.Forms.GroupBox cellMapGroup;
+		private System.Windows.Forms.ToolStrip cellMapToolbar;
+		private System.Windows.Forms.ToolStripButton cellMapShow;
+		private System.Windows.Forms.PictureBox cellMapPreview;
 		private System.Windows.Forms.GroupBox alphaMap1Group;
 		private System.Windows.Forms.ToolStrip alphaMap1Toolbar;
 		private System.Windows.Forms.ToolStripButton toolStripButton10;
 		private System.Windows.Forms.ToolStripButton toolStripButton11;
-		private System.Windows.Forms.ToolStripButton toolStripButton12;
+		private System.Windows.Forms.ToolStripButton alphaMap1Show;
 		private System.Windows.Forms.PictureBox alphaMap1Preview;
 		private System.Windows.Forms.GroupBox alphaMap2Group;
 		private System.Windows.Forms.ToolStrip alphaMap2Toolbar;
 		private System.Windows.Forms.ToolStripButton toolStripButton13;
 		private System.Windows.Forms.ToolStripButton toolStripButton14;
-		private System.Windows.Forms.ToolStripButton toolStripButton15;
+		private System.Windows.Forms.ToolStripButton alphaMap2Show;
 		private System.Windows.Forms.PictureBox alphaMap2Preview;
 		private System.Windows.Forms.GroupBox alphaMap3Group;
 		private System.Windows.Forms.ToolStrip alphaMap3Toolbar;
 		private System.Windows.Forms.ToolStripButton toolStripButton16;
 		private System.Windows.Forms.ToolStripButton toolStripButton17;
-		private System.Windows.Forms.ToolStripButton toolStripButton18;
+		private System.Windows.Forms.ToolStripButton alphaMap3Show;
 		private System.Windows.Forms.PictureBox alphaMap3Preview;
 		private System.Windows.Forms.ToolStripButton toolsNew;
 		private System.Windows.Forms.ToolStripButton toolsOpen;
 		private System.Windows.Forms.ToolStripButton toolsSave;
 		private System.Windows.Forms.ToolStripButton toolsSaveAs;
+		private System.Windows.Forms.ToolStripButton cellMapImportWater;
+		private System.Windows.Forms.ToolStripButton cellMapImportBuilding;
+		private System.Windows.Forms.ToolStripButton cellMapImportLava;
+		private System.Windows.Forms.ToolStripButton cellMapExportWater;
+		private System.Windows.Forms.ToolStripButton cellMapExportBuilding;
+		private System.Windows.Forms.ToolStripButton cellMapExportLava;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+		private System.Windows.Forms.ToolStripButton toolStripButton25;
+		private System.Windows.Forms.ToolStripButton toolStripButton26;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+		private System.Windows.Forms.ToolStripButton cellMapImportCliff;
+		private System.Windows.Forms.ToolStripButton cellMapExportCliff;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+		private System.Windows.Forms.ToolStripButton cellMapImportSloped;
+		private System.Windows.Forms.ToolStripButton cellMapExportSloped;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.FlowLayoutPanel flowLayout;
+		private System.Windows.Forms.ToolStripMenuItem menuHelp;
+		private System.Windows.Forms.ToolStripMenuItem menuHelpForums;
+		private System.Windows.Forms.ToolStripMenuItem menuHelpAbout;
 	}
 }

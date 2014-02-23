@@ -71,6 +71,7 @@
             0,
             0,
             0});
+			this.valueSelector.ValueChanged += new System.EventHandler(this.valueSelector_ValueChanged);
 			// 
 			// okButton
 			// 

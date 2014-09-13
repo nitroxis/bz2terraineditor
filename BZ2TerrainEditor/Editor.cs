@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BZ2TerrainEditor
@@ -29,8 +25,8 @@ namespace BZ2TerrainEditor
 		private FileInfo currentFile;
 		private bool changed;
 
-		private List<GCHandle> imageHandles;
-		private List<Form> forms;
+		private readonly List<GCHandle> imageHandles;
+		private readonly List<Form> forms;
 
 		#endregion
 
@@ -600,7 +596,6 @@ namespace BZ2TerrainEditor
 		}
 
 		#endregion
-
 
 		private void normalMapShow_Click(object sender, EventArgs e)
 		{

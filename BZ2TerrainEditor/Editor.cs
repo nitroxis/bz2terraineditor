@@ -301,6 +301,8 @@ namespace BZ2TerrainEditor
 
 		#region Event Handlers
 
+		#region Menu
+
 		private void newTerrain(object sender, EventArgs e)
 		{
 			SizeDialog dialog = new SizeDialog();
@@ -374,7 +376,7 @@ namespace BZ2TerrainEditor
 				this.changed = false;
 			}
 		}
-		
+
 		private void menuFileExit_Click(object sender, EventArgs e)
 		{
 			this.Close();
@@ -390,6 +392,8 @@ namespace BZ2TerrainEditor
 			AboutDialog dialog = new AboutDialog();
 			dialog.ShowDialog();
 		}
+
+		#endregion
 
 		#region Height Map
 
@@ -597,6 +601,8 @@ namespace BZ2TerrainEditor
 
 		#endregion
 
+		#region Normal Map
+
 		private void normalMapShow_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -606,6 +612,10 @@ namespace BZ2TerrainEditor
 			this.forms.Add(viewer);
 			viewer.Show();
 		}
+
+		#endregion
+
+		#region Cell Type Map
 
 		private void cellMapShow_Click(object sender, EventArgs e)
 		{
@@ -617,6 +627,10 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		#endregion
+
+		#region Alpha Map 1
+
 		private void alphaMap1Show_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -627,6 +641,10 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		#endregion
+
+		#region Alpha Map 2
+		
 		private void alphaMap2Show_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -636,6 +654,10 @@ namespace BZ2TerrainEditor
 			this.forms.Add(viewer);
 			viewer.Show();
 		}
+
+		#endregion
+		
+		#region Alpha Map 3
 
 		private void alphaMap3Show_Click(object sender, EventArgs e)
 		{
@@ -648,10 +670,9 @@ namespace BZ2TerrainEditor
 		}
 
 		#endregion
-
+		
 		#endregion
 
-
-		
+		#endregion
 	}
 }

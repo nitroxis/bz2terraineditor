@@ -106,6 +106,7 @@ namespace BZ2TerrainEditor
 			this.alphaMap1Preview.Image = this.generate8BitImage(this.terrain.AlphaMap1);
 			this.alphaMap2Preview.Image = this.generate8BitImage(this.terrain.AlphaMap2);
 			this.alphaMap3Preview.Image = this.generate8BitImage(this.terrain.AlphaMap3);
+			this.tileMap1Preview.Image = this.generateTileMapImage(this.terrain.InfoMap);
 			this.flowLayout.Enabled = true;
 		}
 
@@ -216,6 +217,30 @@ namespace BZ2TerrainEditor
 			return bmp;
 		}
 
+		private Bitmap generateTileMapImage(uint[,] map)
+		{
+			int width = map.GetUpperBound(0) + 1;
+			int height = map.GetUpperBound(1) + 1;
+
+			byte[] buffer = new byte[width * height * 3];
+
+			int i = 0;
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+				}
+			}
+
+			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			this.imageHandles.Add(handle);
+			return bmp;
+		}
+
 		private Bitmap generate16BitImage(short[,] map, short min, short max)
 		{
 			int width = map.GetUpperBound(0) + 1;
@@ -263,6 +288,14 @@ namespace BZ2TerrainEditor
 			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
 			this.imageHandles.Add(handle); 
 			return bmp;
+		}
+
+		private static Bitmap resizeBitmap(Bitmap bitmap, int width, int height)
+		{
+			Bitmap rescaled = new Bitmap(width, height, bitmap.PixelFormat);
+			Graphics g = Graphics.FromImage(rescaled);
+			g.DrawImage(bitmap, 0, 0, width, height);
+			return rescaled;
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -397,7 +430,7 @@ namespace BZ2TerrainEditor
 
 		#region Height Map
 
-		private void heightMapShow_Click(object sender, EventArgs e)
+		private void heightMapPreview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -419,17 +452,12 @@ namespace BZ2TerrainEditor
 				return;
 
 			Bitmap bitmap = new Bitmap(dialog.FileName);
-
 			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
 			{
 				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
 					return;
 
-				Bitmap rescaled = new Bitmap(this.terrain.Width, this.terrain.Height, bitmap.PixelFormat);
-				Graphics g = Graphics.FromImage(rescaled);
-				g.DrawImage(bitmap, 0, 0, this.terrain.Width, this.terrain.Height);
-
-				bitmap = rescaled;
+				bitmap = resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
 			}
 
 			HeightMapRangeDialog rangeDialog = new HeightMapRangeDialog();
@@ -531,7 +559,7 @@ namespace BZ2TerrainEditor
 
 		#region Color Map
 
-		private void colorMapShow_Click(object sender, EventArgs e)
+		private void colorMapPreview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -553,17 +581,12 @@ namespace BZ2TerrainEditor
 				return;
 
 			Bitmap bitmap = new Bitmap(dialog.FileName);
-
 			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
 			{
 				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
 					return;
 
-				Bitmap rescaled = new Bitmap(this.terrain.Width, this.terrain.Height, bitmap.PixelFormat);
-				Graphics g = Graphics.FromImage(rescaled);
-				g.DrawImage(bitmap, 0, 0, this.terrain.Width, this.terrain.Height);
-
-				bitmap = rescaled;
+				bitmap = resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
 			}
 
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
@@ -603,7 +626,7 @@ namespace BZ2TerrainEditor
 
 		#region Normal Map
 
-		private void normalMapShow_Click(object sender, EventArgs e)
+		private void normalMapPreview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -613,11 +636,57 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		private void normalMapImport_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
+			dialog.Filter = imageFileFilter;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			Bitmap bitmap = new Bitmap(dialog.FileName);
+			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
+			{
+				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+					return;
+
+				bitmap = resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
+			}
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.NormalMap[x, y] = buffer[y * data.Stride + x * 3];
+
+			this.changed = true;
+			this.initialize();
+		}
+		
+		private void normalMapExport_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.Filter = imageFileFilter;
+			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			this.normalMapPreview.Image.Save(dialog.FileName);
+		}
+
 		#endregion
 
 		#region Cell Type Map
 
-		private void cellMapShow_Click(object sender, EventArgs e)
+		private void cellMapPreview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -631,7 +700,7 @@ namespace BZ2TerrainEditor
 
 		#region Alpha Map 1
 
-		private void alphaMap1Show_Click(object sender, EventArgs e)
+		private void alphaMap1Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -645,7 +714,7 @@ namespace BZ2TerrainEditor
 
 		#region Alpha Map 2
 		
-		private void alphaMap2Show_Click(object sender, EventArgs e)
+		private void alphaMap2Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -659,7 +728,7 @@ namespace BZ2TerrainEditor
 		
 		#region Alpha Map 3
 
-		private void alphaMap3Show_Click(object sender, EventArgs e)
+		private void alphaMap3Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
 				return;
@@ -670,6 +739,9 @@ namespace BZ2TerrainEditor
 		}
 
 		#endregion
+
+
+
 		
 		#endregion
 

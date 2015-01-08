@@ -152,7 +152,7 @@ namespace BZ2TerrainEditor
 			byte[] buffer = new byte[width * height * 3];
 
 			int i = 0;
-			for (int y = 0; y < height; y++)
+			for (int y = height - 1; y >= 0; y--)
 			{
 				for (int x = 0; x < width; x++)
 				{
@@ -176,7 +176,7 @@ namespace BZ2TerrainEditor
 			byte[] buffer = new byte[width * height * 3];
 
 			int i = 0;
-			for (int y = 0; y < height; y++)
+			for (int y = height - 1; y >= 0; y--)
 			{
 				for (int x = 0; x < width; x++)
 				{
@@ -204,7 +204,7 @@ namespace BZ2TerrainEditor
 			byte[] buffer = new byte[width * height * 3];
 
 			int i = 0;
-			for (int y = 0; y < height; y++)
+			for (int y = height - 1; y >= 0; y--)
 			{
 				for (int x = 0; x < width; x++)
 				{
@@ -230,7 +230,7 @@ namespace BZ2TerrainEditor
 			byte[] buffer = new byte[width * height * 3];
 			
 			int i = 0;
-			for (int y = 0; y < height; y++)
+			for (int y = height - 1; y >= 0; y--)
 			{
 				for (int x = 0; x < width; x++)
 				{
@@ -256,7 +256,7 @@ namespace BZ2TerrainEditor
 			byte[] buffer = new byte[width * height * 3];
 
 			int i = 0;
-			for (int y = 0; y < height; y++)
+			for (int y = height - 1; y >= 0; y--)
 			{
 				for (int x = 0; x < width; x++)
 				{
@@ -281,7 +281,7 @@ namespace BZ2TerrainEditor
 			byte[] buffer = new byte[width * height * 3];
 
 			int i = 0;
-			for (int y = 0; y < height; y++)
+			for (int y = height - 1; y >= 0; y--)
 			{
 				for (int x = 0; x < width; x++)
 				{
@@ -512,6 +512,7 @@ namespace BZ2TerrainEditor
 			if (rangeDialog.ShowDialog() != DialogResult.OK)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -625,7 +626,7 @@ namespace BZ2TerrainEditor
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
 
 			int i = 0;
-			for (int y = 0; y < data.Height; y++)
+			for (int y = data.Height - 1; y > 0; y--)
 			{
 				for (int x = 0; x < data.Width; x++)
 				{
@@ -670,6 +671,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -713,6 +715,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -742,6 +745,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -771,6 +775,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -800,6 +805,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -829,6 +835,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -872,6 +879,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -915,6 +923,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -958,6 +967,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
@@ -991,6 +1001,7 @@ namespace BZ2TerrainEditor
 			if (bitmap == null)
 				return;
 
+			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
 			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);

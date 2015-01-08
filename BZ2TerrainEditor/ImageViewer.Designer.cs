@@ -30,12 +30,12 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.contextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.contextMenuFilter = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuFilterNearest = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuFilterBilinear = new System.Windows.Forms.ToolStripMenuItem();
-			this.contextMenuClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuFilterBicubic = new System.Windows.Forms.ToolStripMenuItem();
+			this.contextMenuSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.contextMenuClose = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -47,11 +47,6 @@
             this.contextMenuClose});
 			this.contextMenu.Name = "contextMenu";
 			this.contextMenu.Size = new System.Drawing.Size(104, 54);
-			// 
-			// contextMenuSeparator1
-			// 
-			this.contextMenuSeparator1.Name = "contextMenuSeparator1";
-			this.contextMenuSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// contextMenuFilter
 			// 
@@ -66,30 +61,35 @@
 			// contextMenuFilterNearest
 			// 
 			this.contextMenuFilterNearest.Name = "contextMenuFilterNearest";
-			this.contextMenuFilterNearest.Size = new System.Drawing.Size(152, 22);
+			this.contextMenuFilterNearest.Size = new System.Drawing.Size(114, 22);
 			this.contextMenuFilterNearest.Text = "&Nearest";
 			this.contextMenuFilterNearest.Click += new System.EventHandler(this.contextMenuFilterNearest_Click);
 			// 
 			// contextMenuFilterBilinear
 			// 
 			this.contextMenuFilterBilinear.Name = "contextMenuFilterBilinear";
-			this.contextMenuFilterBilinear.Size = new System.Drawing.Size(152, 22);
+			this.contextMenuFilterBilinear.Size = new System.Drawing.Size(114, 22);
 			this.contextMenuFilterBilinear.Text = "&Bilinear";
 			this.contextMenuFilterBilinear.Click += new System.EventHandler(this.contextMenuFilterBilinear_Click);
+			// 
+			// contextMenuFilterBicubic
+			// 
+			this.contextMenuFilterBicubic.Name = "contextMenuFilterBicubic";
+			this.contextMenuFilterBicubic.Size = new System.Drawing.Size(114, 22);
+			this.contextMenuFilterBicubic.Text = "&Bicubic";
+			this.contextMenuFilterBicubic.Click += new System.EventHandler(this.contextMenuFilterBicubic_Click);
+			// 
+			// contextMenuSeparator1
+			// 
+			this.contextMenuSeparator1.Name = "contextMenuSeparator1";
+			this.contextMenuSeparator1.Size = new System.Drawing.Size(100, 6);
 			// 
 			// contextMenuClose
 			// 
 			this.contextMenuClose.Image = global::BZ2TerrainEditor.Properties.Resources.cross1;
 			this.contextMenuClose.Name = "contextMenuClose";
-			this.contextMenuClose.Size = new System.Drawing.Size(152, 22);
+			this.contextMenuClose.Size = new System.Drawing.Size(103, 22);
 			this.contextMenuClose.Text = "&Close";
-			// 
-			// contextMenuFilterBicubic
-			// 
-			this.contextMenuFilterBicubic.Name = "contextMenuFilterBicubic";
-			this.contextMenuFilterBicubic.Size = new System.Drawing.Size(152, 22);
-			this.contextMenuFilterBicubic.Text = "&Bicubic";
-			this.contextMenuFilterBicubic.Click += new System.EventHandler(this.contextMenuFilterBicubic_Click);
 			// 
 			// ImageViewer
 			// 

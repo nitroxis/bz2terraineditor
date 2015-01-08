@@ -149,6 +149,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\document-import-3.png" />
+    <None Include="Resources\document-import-2.png" />
+    <None Include="Resources\document-import-1.png" />
+    <None Include="Resources\document-import-0.png" />
+    <None Include="Resources\document-export-3.png" />
+    <None Include="Resources\document-export-2.png" />
+    <None Include="Resources\document-export-1.png" />
+    <None Include="Resources\document-export-0.png" />
     <None Include="Resources\document-import-16.png" />
     <None Include="Resources\document-export-16.png" />
     <None Include="Resources\information.png" />

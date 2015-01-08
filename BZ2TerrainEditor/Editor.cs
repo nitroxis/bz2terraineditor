@@ -106,7 +106,10 @@ namespace BZ2TerrainEditor
 			this.alphaMap1Preview.Image = this.generate8BitImage(this.terrain.AlphaMap1);
 			this.alphaMap2Preview.Image = this.generate8BitImage(this.terrain.AlphaMap2);
 			this.alphaMap3Preview.Image = this.generate8BitImage(this.terrain.AlphaMap3);
-			this.tileMap1Preview.Image = this.generateTileMapImage(this.terrain.InfoMap);
+			this.tileMap0Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 0);
+			this.tileMap1Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 1);
+			this.tileMap2Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 2);
+			this.tileMap3Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 3);
 			this.flowLayout.Enabled = true;
 		}
 
@@ -217,7 +220,7 @@ namespace BZ2TerrainEditor
 			return bmp;
 		}
 
-		private Bitmap generateTileMapImage(uint[,] map)
+		private Bitmap generateTileMapImage(uint[,] map, int layer)
 		{
 			int width = map.GetUpperBound(0) + 1;
 			int height = map.GetUpperBound(1) + 1;
@@ -229,9 +232,11 @@ namespace BZ2TerrainEditor
 			{
 				for (int x = 0; x < width; x++)
 				{
-					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
-					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
-					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
+					int v = (byte)((map[x, y] >> (layer << 2)) & 0xF);
+					byte color = (byte)(v | (v << 4));
+					buffer[i++] = color;
+					buffer[i++] = color;
+					buffer[i++] = color;
 				}
 			}
 
@@ -296,6 +301,50 @@ namespace BZ2TerrainEditor
 			Graphics g = Graphics.FromImage(rescaled);
 			g.DrawImage(bitmap, 0, 0, width, height);
 			return rescaled;
+		}
+
+		private Bitmap loadBitmap()
+		{
+			try
+			{
+				OpenFileDialog dialog = new OpenFileDialog();
+				dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
+				dialog.Filter = imageFileFilter;
+				if (dialog.ShowDialog() != DialogResult.OK)
+					return null;
+
+				Bitmap bitmap = new Bitmap(dialog.FileName);
+				if (bitmap.Width == this.terrain.Width && bitmap.Height == this.terrain.Height)
+					return bitmap;
+
+				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+					return null;
+
+				return resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(string.Format("Failed to load bitmap: {0}.", ex.Message));
+				return null;
+			}
+		}
+
+		private void saveImage(Image image)
+		{
+			try
+			{
+				SaveFileDialog dialog = new SaveFileDialog();
+				dialog.Filter = imageFileFilter;
+				dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
+				if (dialog.ShowDialog() != DialogResult.OK)
+					return;
+
+				image.Save(dialog.FileName);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(string.Format("Failed to save image: {0}.", ex.Message));
+			}
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -445,20 +494,9 @@ namespace BZ2TerrainEditor
 			if(this.terrain == null)
 				return;
 
-			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
-			dialog.Filter = imageFileFilter;
-			if (dialog.ShowDialog() != DialogResult.OK)
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
 				return;
-
-			Bitmap bitmap = new Bitmap(dialog.FileName);
-			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
-			{
-				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-					return;
-
-				bitmap = resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
-			}
 
 			HeightMapRangeDialog rangeDialog = new HeightMapRangeDialog();
 			if (rangeDialog.ShowDialog() != DialogResult.OK)
@@ -482,13 +520,7 @@ namespace BZ2TerrainEditor
 			if (this.terrain == null)
 				return;
 
-			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.Filter = imageFileFilter;
-			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
-			if (dialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			this.heightMapPreview.Image.Save(dialog.FileName);
+			this.saveImage(this.heightMapPreview.Image);
 		}
 
 		private void heightMapImport16Bit_Click(object sender, EventArgs e)
@@ -574,20 +606,9 @@ namespace BZ2TerrainEditor
 			if (this.terrain == null)
 				return;
 
-			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
-			dialog.Filter = imageFileFilter;
-			if (dialog.ShowDialog() != DialogResult.OK)
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
 				return;
-
-			Bitmap bitmap = new Bitmap(dialog.FileName);
-			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
-			{
-				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-					return;
-
-				bitmap = resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
-			}
 
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
@@ -613,13 +634,7 @@ namespace BZ2TerrainEditor
 			if (this.terrain == null)
 				return;
 
-			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.Filter = imageFileFilter;
-			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
-			if (dialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			this.colorMapPreview.Image.Save(dialog.FileName);
+			this.saveImage(this.colorMapPreview.Image);
 		}
 
 		#endregion
@@ -641,20 +656,9 @@ namespace BZ2TerrainEditor
 			if (this.terrain == null)
 				return;
 
-			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
-			dialog.Filter = imageFileFilter;
-			if (dialog.ShowDialog() != DialogResult.OK)
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
 				return;
-
-			Bitmap bitmap = new Bitmap(dialog.FileName);
-			if (bitmap.Width != this.terrain.Width || bitmap.Height != this.terrain.Height)
-			{
-				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
-					return;
-
-				bitmap = resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
-			}
 
 			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 			byte[] buffer = new byte[data.Height * data.Stride];
@@ -673,13 +677,7 @@ namespace BZ2TerrainEditor
 			if (this.terrain == null)
 				return;
 
-			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.Filter = imageFileFilter;
-			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
-			if (dialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			this.normalMapPreview.Image.Save(dialog.FileName);
+			this.saveImage(this.normalMapPreview.Image);
 		}
 
 		#endregion
@@ -710,10 +708,39 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		private void alphaMap1Import_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.AlphaMap1[x, y] = buffer[y * data.Stride + x * 3];
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void alphaMap1Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.alphaMap1Preview.Image);
+		}
+
 		#endregion
 
 		#region Alpha Map 2
-		
+
 		private void alphaMap2Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -722,6 +749,35 @@ namespace BZ2TerrainEditor
 			ImageViewer viewer = new ImageViewer(this.alphaMap2Preview.Image, "Alpha Map (Layer 2)");
 			this.forms.Add(viewer);
 			viewer.Show();
+		}
+
+		private void alphaMap2Import_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.AlphaMap2[x, y] = buffer[y * data.Stride + x * 3];
+
+			this.changed = true;
+			this.initialize();
+		}
+		
+		private void alphaMap2Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.alphaMap2Preview.Image);
 		}
 
 		#endregion
@@ -738,13 +794,83 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		private void alphaMap3Import_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.AlphaMap3[x, y] = buffer[y * data.Stride + x * 3];
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void alphaMap3Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.alphaMap3Preview.Image);
+		}
+
 		#endregion
 
+		#region Tile Map
 
+		private void tileMap0Preview_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
 
+			ImageViewer viewer = new ImageViewer(this.tileMap0Preview.Image, "Tile Map (Layer 0)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
 		
+		private void tileMap1Preview_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.tileMap1Preview.Image, "Tile Map (Layer 1)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
+		private void tileMap2Preview_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.tileMap2Preview.Image, "Tile Map (Layer 2)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+		
+		private void tileMap3Preview_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			ImageViewer viewer = new ImageViewer(this.tileMap3Preview.Image, "Tile Map (Layer 3)");
+			this.forms.Add(viewer);
+			viewer.Show();
+		}
+
 		#endregion
 
+		#endregion
+		
 		#endregion
 	}
 }

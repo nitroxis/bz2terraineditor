@@ -39,6 +39,13 @@ namespace BZ2TerrainEditor
 
 		#region Methods
 
+		protected override void OnKeyDown(KeyEventArgs e)
+		{
+			base.OnKeyDown(e);
+			if (e.KeyCode == Keys.Escape)
+				this.Close();
+		}
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
@@ -77,6 +84,7 @@ namespace BZ2TerrainEditor
 		}
 
 		#endregion
+
 
 	}
 }

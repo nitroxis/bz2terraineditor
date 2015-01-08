@@ -607,6 +607,7 @@
 			this.cellMapImportCliff.Name = "cellMapImportCliff";
 			this.cellMapImportCliff.Size = new System.Drawing.Size(23, 22);
 			this.cellMapImportCliff.Text = "Import Cliff Bitmap";
+			this.cellMapImportCliff.Click += new System.EventHandler(this.cellMapImportCliff_Click);
 			// 
 			// cellMapExportCliff
 			// 
@@ -616,6 +617,7 @@
 			this.cellMapExportCliff.Name = "cellMapExportCliff";
 			this.cellMapExportCliff.Size = new System.Drawing.Size(23, 22);
 			this.cellMapExportCliff.Text = "Export Cliff Bitmap";
+			this.cellMapExportCliff.Click += new System.EventHandler(this.cellMapExportCliff_Click);
 			// 
 			// cellMapImportWater
 			// 
@@ -625,6 +627,7 @@
 			this.cellMapImportWater.Name = "cellMapImportWater";
 			this.cellMapImportWater.Size = new System.Drawing.Size(23, 22);
 			this.cellMapImportWater.Text = "Import Water Bitmap";
+			this.cellMapImportWater.Click += new System.EventHandler(this.cellMapImportWater_Click);
 			// 
 			// cellMapExportWater
 			// 
@@ -634,6 +637,7 @@
 			this.cellMapExportWater.Name = "cellMapExportWater";
 			this.cellMapExportWater.Size = new System.Drawing.Size(23, 22);
 			this.cellMapExportWater.Text = "Export Water Bitmap";
+			this.cellMapExportWater.Click += new System.EventHandler(this.cellMapExportWater_Click);
 			// 
 			// cellMapImportBuilding
 			// 
@@ -643,6 +647,7 @@
 			this.cellMapImportBuilding.Name = "cellMapImportBuilding";
 			this.cellMapImportBuilding.Size = new System.Drawing.Size(23, 22);
 			this.cellMapImportBuilding.Text = "Import Building Bitmap";
+			this.cellMapImportBuilding.Click += new System.EventHandler(this.cellMapImportBuilding_Click);
 			// 
 			// cellMapExportBuilding
 			// 
@@ -652,6 +657,7 @@
 			this.cellMapExportBuilding.Name = "cellMapExportBuilding";
 			this.cellMapExportBuilding.Size = new System.Drawing.Size(23, 22);
 			this.cellMapExportBuilding.Text = "Export Building Bitmap";
+			this.cellMapExportBuilding.Click += new System.EventHandler(this.cellMapExportBuilding_Click);
 			// 
 			// cellMapImportLava
 			// 
@@ -661,6 +667,7 @@
 			this.cellMapImportLava.Name = "cellMapImportLava";
 			this.cellMapImportLava.Size = new System.Drawing.Size(23, 22);
 			this.cellMapImportLava.Text = "Import Lava Bitmap";
+			this.cellMapImportLava.Click += new System.EventHandler(this.cellMapImportLava_Click);
 			// 
 			// cellMapExportLava
 			// 
@@ -670,6 +677,7 @@
 			this.cellMapExportLava.Name = "cellMapExportLava";
 			this.cellMapExportLava.Size = new System.Drawing.Size(23, 22);
 			this.cellMapExportLava.Text = "Export Lava Bitmap";
+			this.cellMapExportLava.Click += new System.EventHandler(this.cellMapExportLava_Click);
 			// 
 			// cellMapImportSloped
 			// 
@@ -679,6 +687,7 @@
 			this.cellMapImportSloped.Name = "cellMapImportSloped";
 			this.cellMapImportSloped.Size = new System.Drawing.Size(23, 22);
 			this.cellMapImportSloped.Text = "Import Sloped Surface Bitmap";
+			this.cellMapImportSloped.Click += new System.EventHandler(this.cellMapImportSloped_Click);
 			// 
 			// cellMapExportSloped
 			// 
@@ -688,6 +697,7 @@
 			this.cellMapExportSloped.Name = "cellMapExportSloped";
 			this.cellMapExportSloped.Size = new System.Drawing.Size(23, 22);
 			this.cellMapExportSloped.Text = "Export Sloped Surface Bitmap";
+			this.cellMapExportSloped.Click += new System.EventHandler(this.cellMapExportSloped_Click);
 			// 
 			// cellMapPreview
 			// 
@@ -855,6 +865,7 @@
 			this.tileMap0Import.Name = "tileMap0Import";
 			this.tileMap0Import.Size = new System.Drawing.Size(23, 22);
 			this.tileMap0Import.Text = "Import Layer 0";
+			this.tileMap0Import.Click += new System.EventHandler(this.tileMap0Import_Click);
 			// 
 			// tileMap0Export
 			// 
@@ -864,6 +875,7 @@
 			this.tileMap0Export.Name = "tileMap0Export";
 			this.tileMap0Export.Size = new System.Drawing.Size(23, 22);
 			this.tileMap0Export.Text = "Export Layer 0";
+			this.tileMap0Export.Click += new System.EventHandler(this.tileMap0Export_Click);
 			// 
 			// tileMap1Import
 			// 
@@ -873,6 +885,7 @@
 			this.tileMap1Import.Name = "tileMap1Import";
 			this.tileMap1Import.Size = new System.Drawing.Size(23, 22);
 			this.tileMap1Import.Text = "Import Layer 1";
+			this.tileMap1Import.Click += new System.EventHandler(this.tileMap1Import_Click);
 			// 
 			// tileMap1Export
 			// 
@@ -882,6 +895,7 @@
 			this.tileMap1Export.Name = "tileMap1Export";
 			this.tileMap1Export.Size = new System.Drawing.Size(23, 22);
 			this.tileMap1Export.Text = "Export Layer 1";
+			this.tileMap1Export.Click += new System.EventHandler(this.tileMap1Export_Click);
 			// 
 			// tileMap2Import
 			// 
@@ -891,6 +905,7 @@
 			this.tileMap2Import.Name = "tileMap2Import";
 			this.tileMap2Import.Size = new System.Drawing.Size(23, 22);
 			this.tileMap2Import.Text = "Import Layer 2";
+			this.tileMap2Import.Click += new System.EventHandler(this.tileMap2Import_Click);
 			// 
 			// tileMap2Export
 			// 
@@ -900,6 +915,7 @@
 			this.tileMap2Export.Name = "tileMap2Export";
 			this.tileMap2Export.Size = new System.Drawing.Size(23, 22);
 			this.tileMap2Export.Text = "Export Layer 2";
+			this.tileMap2Export.Click += new System.EventHandler(this.tileMap2Export_Click);
 			// 
 			// tileMap3Import
 			// 
@@ -909,6 +925,7 @@
 			this.tileMap3Import.Name = "tileMap3Import";
 			this.tileMap3Import.Size = new System.Drawing.Size(23, 22);
 			this.tileMap3Import.Text = "Import Layer 3";
+			this.tileMap3Import.Click += new System.EventHandler(this.tileMap3Import_Click);
 			// 
 			// tileMap3Export
 			// 
@@ -918,6 +935,7 @@
 			this.tileMap3Export.Name = "tileMap3Export";
 			this.tileMap3Export.Size = new System.Drawing.Size(23, 22);
 			this.tileMap3Export.Text = "Export Layer 3";
+			this.tileMap3Export.Click += new System.EventHandler(this.tileMap3Export_Click);
 			// 
 			// tileMap0Preview
 			// 

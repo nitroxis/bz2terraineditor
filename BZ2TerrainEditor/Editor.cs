@@ -144,30 +144,6 @@ namespace BZ2TerrainEditor
 			this.imageHandles.Clear();
 		}
 
-		private Bitmap generate1BitImage(byte[,] map)
-		{
-			int width = map.GetUpperBound(0) + 1;
-			int height = map.GetUpperBound(1) + 1;
-
-			byte[] buffer = new byte[width * height * 3];
-
-			int i = 0;
-			for (int y = 0; y < height; y++)
-			{
-				for (int x = 0; x < width; x++)
-				{
-					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
-					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
-					buffer[i++] = (byte)(map[x, y] == 0 ? 0 : 255);
-				}
-			}
-
-			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
-			Bitmap bmp = new Bitmap(width, height, width * 3, System.Drawing.Imaging.PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
-			this.imageHandles.Add(handle);
-			return bmp;
-		}
-
 		private Bitmap generate8BitImage(byte[,] map)
 		{
 			int width = map.GetUpperBound(0) + 1;
@@ -220,7 +196,7 @@ namespace BZ2TerrainEditor
 			return bmp;
 		}
 
-		private Bitmap generateTileMapImage(uint[,] map, int layer)
+		private Bitmap generateCellTypeImage(CellType[,] map, CellType typeMask)
 		{
 			int width = map.GetUpperBound(0) + 1;
 			int height = map.GetUpperBound(1) + 1;
@@ -232,7 +208,33 @@ namespace BZ2TerrainEditor
 			{
 				for (int x = 0; x < width; x++)
 				{
-					int v = (byte)((map[x, y] >> (layer << 2)) & 0xF);
+					byte color = (map[x, y] & typeMask) != 0 ? (byte)255 : (byte)0;
+					buffer[i++] = color;
+					buffer[i++] = color;
+					buffer[i++] = color;
+				}
+			}
+
+			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			this.imageHandles.Add(handle);
+			return bmp;
+		}
+
+		private Bitmap generateTileMapImage(uint[,] map, int layer)
+		{
+			int width = map.GetUpperBound(0) + 1;
+			int height = map.GetUpperBound(1) + 1;
+			int shift = layer * 4;
+
+			byte[] buffer = new byte[width * height * 3];
+			
+			int i = 0;
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					int v = (byte)((map[x, y] >> shift) & 0xF);
 					byte color = (byte)(v | (v << 4));
 					buffer[i++] = color;
 					buffer[i++] = color;
@@ -305,6 +307,11 @@ namespace BZ2TerrainEditor
 
 		private Bitmap loadBitmap()
 		{
+			return this.loadBitmap(this.terrain.Width, this.terrain.Height);
+		}
+
+		private Bitmap loadBitmap(int width, int height)
+		{
 			try
 			{
 				OpenFileDialog dialog = new OpenFileDialog();
@@ -314,13 +321,13 @@ namespace BZ2TerrainEditor
 					return null;
 
 				Bitmap bitmap = new Bitmap(dialog.FileName);
-				if (bitmap.Width == this.terrain.Width && bitmap.Height == this.terrain.Height)
+				if (bitmap.Width == width && bitmap.Height == height)
 					return bitmap;
 
 				if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
 					return null;
 
-				return resizeBitmap(bitmap, this.terrain.Width, this.terrain.Height);
+				return resizeBitmap(bitmap, width, height);
 			}
 			catch (Exception ex)
 			{
@@ -416,9 +423,10 @@ namespace BZ2TerrainEditor
 
 					if (this.terrain != null)
 					{
-						this.initialize();
 						this.currentFile = new FileInfo(dialog.FileName);
 						Properties.Settings.Default.OpenFileInitialDirectory = this.currentFile.DirectoryName;
+
+						this.initialize();
 					}
 				}
 				else
@@ -442,6 +450,8 @@ namespace BZ2TerrainEditor
 
 			terrain.Write(this.currentFile.FullName);
 			this.changed = false;
+
+			this.updateTitle();
 		}
 
 		private void saveAsTerrain(object sender, EventArgs e)
@@ -694,6 +704,151 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		private void cellMapImportCliff_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.CellMap[x, y] = (terrain.CellMap[x, y] & ~CellType.Cliff) | (buffer[y * data.Stride + x * 3] > 127 ? CellType.Cliff : 0);
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void cellMapExportCliff_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(generateCellTypeImage(this.terrain.CellMap, CellType.Cliff));
+		}
+
+		private void cellMapImportWater_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.CellMap[x, y] = (terrain.CellMap[x, y] & ~CellType.Water) | (buffer[y * data.Stride + x * 3] > 127 ? CellType.Water : 0);
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void cellMapExportWater_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(generateCellTypeImage(this.terrain.CellMap, CellType.Water));
+		}
+
+		private void cellMapImportBuilding_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.CellMap[x, y] = (terrain.CellMap[x, y] & ~CellType.Building) | (buffer[y * data.Stride + x * 3] > 127 ? CellType.Building : 0);
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void cellMapExportBuilding_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(generateCellTypeImage(this.terrain.CellMap, CellType.Building));
+		}
+
+		private void cellMapImportLava_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.CellMap[x, y] = (terrain.CellMap[x, y] & ~CellType.Lava) | (buffer[y * data.Stride + x * 3] > 127 ? CellType.Lava : 0);
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void cellMapExportLava_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(generateCellTypeImage(this.terrain.CellMap, CellType.Lava));
+		}
+
+		private void cellMapImportSloped_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap();
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.CellMap[x, y] = (terrain.CellMap[x, y] & ~CellType.Sloped) | (buffer[y * data.Stride + x * 3] > 127 ? CellType.Sloped : 0);
+
+			this.changed = true;
+			this.initialize();
+		}
+
+		private void cellMapExportSloped_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(generateCellTypeImage(this.terrain.CellMap, CellType.Sloped));
+		}
+		
 		#endregion
 
 		#region Alpha Map 1
@@ -827,6 +982,30 @@ namespace BZ2TerrainEditor
 
 		#region Tile Map
 
+		private void importTileMap(int layer)
+		{
+			if (this.terrain == null)
+				return;
+
+			Bitmap bitmap = this.loadBitmap(this.terrain.InfoMap.GetUpperBound(0) + 1, this.terrain.InfoMap.GetUpperBound(1) + 1);
+			if (bitmap == null)
+				return;
+
+			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+			byte[] buffer = new byte[data.Height * data.Stride];
+			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+			int shift = layer * 4;
+			uint mask = ~(0xFu << shift);
+
+			for (int y = 0; y < data.Height; y++)
+				for (int x = 0; x < data.Width; x++)
+					terrain.InfoMap[x, y] = (terrain.InfoMap[x, y] & mask) | (uint)(buffer[y * data.Stride + x * 3] >> 4) << shift;
+
+			this.changed = true;
+			this.initialize();
+		}
+
 		private void tileMap0Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -836,7 +1015,21 @@ namespace BZ2TerrainEditor
 			this.forms.Add(viewer);
 			viewer.Show();
 		}
-		
+
+		private void tileMap0Import_Click(object sender, EventArgs e)
+		{
+			this.importTileMap(0);
+		}
+
+		private void tileMap0Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.tileMap0Preview.Image);
+		}
+
+
 		private void tileMap1Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -847,6 +1040,20 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		private void tileMap1Import_Click(object sender, EventArgs e)
+		{
+			this.importTileMap(1);
+		}
+
+		private void tileMap1Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.tileMap1Preview.Image);
+		}
+
+		
 		private void tileMap2Preview_Click(object sender, EventArgs e)
 		{
 			if (this.terrain == null)
@@ -856,6 +1063,20 @@ namespace BZ2TerrainEditor
 			this.forms.Add(viewer);
 			viewer.Show();
 		}
+
+		private void tileMap2Import_Click(object sender, EventArgs e)
+		{
+			this.importTileMap(2);
+		}
+
+		private void tileMap2Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.tileMap2Preview.Image);
+		}
+
 		
 		private void tileMap3Preview_Click(object sender, EventArgs e)
 		{
@@ -867,6 +1088,19 @@ namespace BZ2TerrainEditor
 			viewer.Show();
 		}
 
+		private void tileMap3Import_Click(object sender, EventArgs e)
+		{
+			this.importTileMap(3);
+		}
+
+		private void tileMap3Export_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+
+			this.saveImage(this.tileMap3Preview.Image);
+		}
+		
 		#endregion
 
 		#endregion

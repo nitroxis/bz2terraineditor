@@ -83,8 +83,13 @@ namespace BZ2TerrainEditor
 			this.contextMenuFilterBicubic.Checked = true;
 		}
 
+	
+		private void contextMenuClose_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+		
 		#endregion
-
 
 	}
 }

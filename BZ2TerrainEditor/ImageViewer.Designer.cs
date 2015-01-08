@@ -46,7 +46,7 @@
             this.contextMenuSeparator1,
             this.contextMenuClose});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(104, 54);
+			this.contextMenu.Size = new System.Drawing.Size(153, 76);
 			// 
 			// contextMenuFilter
 			// 
@@ -55,7 +55,7 @@
             this.contextMenuFilterBilinear,
             this.contextMenuFilterBicubic});
 			this.contextMenuFilter.Name = "contextMenuFilter";
-			this.contextMenuFilter.Size = new System.Drawing.Size(103, 22);
+			this.contextMenuFilter.Size = new System.Drawing.Size(152, 22);
 			this.contextMenuFilter.Text = "&Filter";
 			// 
 			// contextMenuFilterNearest
@@ -82,14 +82,15 @@
 			// contextMenuSeparator1
 			// 
 			this.contextMenuSeparator1.Name = "contextMenuSeparator1";
-			this.contextMenuSeparator1.Size = new System.Drawing.Size(100, 6);
+			this.contextMenuSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// contextMenuClose
 			// 
 			this.contextMenuClose.Image = global::BZ2TerrainEditor.Properties.Resources.cross1;
 			this.contextMenuClose.Name = "contextMenuClose";
-			this.contextMenuClose.Size = new System.Drawing.Size(103, 22);
+			this.contextMenuClose.Size = new System.Drawing.Size(152, 22);
 			this.contextMenuClose.Text = "&Close";
+			this.contextMenuClose.Click += new System.EventHandler(this.contextMenuClose_Click);
 			// 
 			// ImageViewer
 			// 

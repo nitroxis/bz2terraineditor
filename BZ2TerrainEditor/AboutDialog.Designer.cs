@@ -40,7 +40,7 @@
 			// 
 			this.authorLabel.AutoSize = true;
 			this.authorLabel.LinkArea = new System.Windows.Forms.LinkArea(3, 8);
-			this.authorLabel.Location = new System.Drawing.Point(111, 25);
+			this.authorLabel.Location = new System.Drawing.Point(125, 25);
 			this.authorLabel.Name = "authorLabel";
 			this.authorLabel.Size = new System.Drawing.Size(60, 17);
 			this.authorLabel.TabIndex = 4;
@@ -86,15 +86,15 @@
 			this.thanksLabel.AutoSize = true;
 			this.thanksLabel.Location = new System.Drawing.Point(12, 59);
 			this.thanksLabel.Name = "thanksLabel";
-			this.thanksLabel.Size = new System.Drawing.Size(91, 13);
+			this.thanksLabel.Size = new System.Drawing.Size(177, 13);
 			this.thanksLabel.TabIndex = 3;
-			this.thanksLabel.Text = "Thanks to Nielk1.";
+			this.thanksLabel.Text = "Thanks to Nielk1 and BlackDragon.";
 			// 
 			// closeButton
 			// 
 			this.closeButton.Location = new System.Drawing.Point(12, 75);
 			this.closeButton.Name = "closeButton";
-			this.closeButton.Size = new System.Drawing.Size(162, 25);
+			this.closeButton.Size = new System.Drawing.Size(173, 25);
 			this.closeButton.TabIndex = 0;
 			this.closeButton.Text = "Close";
 			this.closeButton.UseVisualStyleBackColor = true;
@@ -104,7 +104,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(186, 112);
+			this.ClientSize = new System.Drawing.Size(197, 112);
 			this.Controls.Add(this.closeButton);
 			this.Controls.Add(this.thanksLabel);
 			this.Controls.Add(this.versionLabel);

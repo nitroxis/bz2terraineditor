@@ -83,6 +83,16 @@ namespace BZ2TerrainEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bzforums {
+            get {
+                object obj = ResourceManager.GetObject("bzforums", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cliff_export {
             get {
                 object obj = ResourceManager.GetObject("cliff-export", resourceCulture);

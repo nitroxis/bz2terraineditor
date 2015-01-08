@@ -22,18 +22,11 @@ namespace BZ2TerrainEditor
 			Assembly assembly = Assembly.GetExecutingAssembly();
 			this.InitializeComponent();
 			this.versionLabel.Text = string.Format(this.versionLabel.Text, assembly.GetName().Version.Major, assembly.GetName().Version.Minor);
-
-			this.closeButton.Focus();
 		}
 
 		#endregion
 
 		#region Methods
-
-		private void closeButton_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
 
 		private void authorLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{

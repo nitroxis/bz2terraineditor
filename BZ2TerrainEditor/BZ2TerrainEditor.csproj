@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\bzforums.png" />
     <None Include="Resources\document-import-3.png" />
     <None Include="Resources\document-import-2.png" />
     <None Include="Resources\document-import-1.png" />

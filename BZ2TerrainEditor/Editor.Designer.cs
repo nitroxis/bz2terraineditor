@@ -226,8 +226,9 @@
 			// 
 			// menuHelpForums
 			// 
+			this.menuHelpForums.Image = global::BZ2TerrainEditor.Properties.Resources.bzforums;
 			this.menuHelpForums.Name = "menuHelpForums";
-			this.menuHelpForums.Size = new System.Drawing.Size(137, 22);
+			this.menuHelpForums.Size = new System.Drawing.Size(152, 22);
 			this.menuHelpForums.Text = "&BZ2 Forums";
 			this.menuHelpForums.Click += new System.EventHandler(this.menuHelpForums_Click);
 			// 

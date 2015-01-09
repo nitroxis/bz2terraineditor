@@ -144,6 +144,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "HeightMapRangeDialog";
+			this.ShowInTaskbar = false;
 			this.Text = "Height Map Range";
 			((System.ComponentModel.ISupportInitialize)(this.minimumSelector)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.maximumSelector)).EndInit();

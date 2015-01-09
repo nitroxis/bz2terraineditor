@@ -100,6 +100,7 @@ namespace BZ2TerrainEditor
 				return;
 
 			this.heightMapPreview.Image = this.generate16BitImage(this.terrain.HeightMap, this.terrain.HeightMapMin, this.terrain.HeightMapMax);
+			this.heightMapOverlay.Image = this.generate16BitImageOverlay(this.terrain.HeightMap, this.terrain.HeightMapMin, this.terrain.HeightMapMax);
 			this.colorMapPreview.Image = this.generateColorMapImage(this.terrain.ColorMap);
 			this.normalMapPreview.Image = this.generate8BitImage(this.terrain.NormalMap);
 			this.cellMapPreview.Image = this.generateCellTypeImage(this.terrain.CellMap);
@@ -110,6 +111,19 @@ namespace BZ2TerrainEditor
 			this.tileMap1Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 1);
 			this.tileMap2Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 2);
 			this.tileMap3Preview.Image = this.generateTileMapImage(this.terrain.InfoMap, 3);
+			this.heightMapMinMaxLabel.Text = string.Format("min: {0}, max: {1}", this.terrain.HeightMapMin, this.terrain.HeightMapMax);
+
+			if (this.terrain.HeightMapMin >= 0)
+			{
+				this.heightMapOverlayCheck.Enabled = false;
+				this.heightMapOverlayCheck.Checked = false;
+				this.heightMapOverlay.Visible = false;
+			}
+			else
+			{
+				this.heightMapOverlayCheck.Enabled = true;
+			}
+
 			this.flowLayout.Enabled = true;
 		}
 
@@ -270,6 +284,40 @@ namespace BZ2TerrainEditor
 			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
 			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
 			this.imageHandles.Add(handle); 
+			return bmp;
+		}
+
+		private Bitmap generate16BitImageOverlay(short[,] map, short min, short max)
+		{
+			int width = map.GetUpperBound(0) + 1;
+			int height = map.GetUpperBound(1) + 1;
+
+			byte[] buffer = new byte[width * height * 3];
+
+			int i = 0;
+			for (int y = height - 1; y >= 0; y--)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					if (map[x, y] >= 0)
+					{
+						byte color = (byte)((float)(map[x, y] - min) / (float)(max - min) * 255.0f);
+						buffer[i++] = color;
+						buffer[i++] = color;
+						buffer[i++] = color;
+					}
+					else
+					{
+						buffer[i++] = 0;
+						buffer[i++] = 31;
+						buffer[i++] = 255;
+					}
+				}
+			}
+
+			GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+			Bitmap bmp = new Bitmap(width, height, width * 3, PixelFormat.Format24bppRgb, handle.AddrOfPinnedObject());
+			this.imageHandles.Add(handle);
 			return bmp;
 		}
 
@@ -596,6 +644,44 @@ namespace BZ2TerrainEditor
 					stream.Write(row, 0, row.Length);
 				}
 			}
+		}
+
+		private void heightMapTranslate_Click(object sender, EventArgs e)
+		{
+			if (this.terrain == null)
+				return;
+			
+			HeightMapTranslateDialog dialog = new HeightMapTranslateDialog();
+			if (dialog.ShowDialog() != DialogResult.OK)
+				return;
+
+			int translation = dialog.Value;
+
+			for (int y = 0; y < this.terrain.Height; y++)
+			{
+				for (int x = 0; x < this.terrain.Width; x++)
+				{
+					int newValue = this.terrain.HeightMap[x, y];
+					newValue += translation;
+
+					if(newValue < short.MinValue) 
+						newValue = short.MinValue;
+					else if (newValue > short.MaxValue) 
+						newValue = short.MaxValue;
+
+					this.terrain.HeightMap[x, y] = (short)newValue;
+				}
+			}
+
+			this.terrain.UpdateMinMax();
+
+			this.initialize();
+			this.changed = true;
+		}
+
+		private void heightMapOverlayCheck_Click(object sender, EventArgs e)
+		{
+			this.heightMapOverlay.Visible = this.heightMapOverlayCheck.Checked;
 		}
 
 		#endregion
@@ -1113,6 +1199,7 @@ namespace BZ2TerrainEditor
 		}
 		
 		#endregion
+
 
 		#endregion
 		

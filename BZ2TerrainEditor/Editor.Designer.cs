@@ -545,7 +545,7 @@
 			this.heightMapOverlayCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.heightMapOverlayCheck.Name = "heightMapOverlayCheck";
 			this.heightMapOverlayCheck.Size = new System.Drawing.Size(23, 22);
-			this.heightMapOverlayCheck.Text = "toolStripButton1";
+			this.heightMapOverlayCheck.Text = "Overlay heights below 0";
 			this.heightMapOverlayCheck.Click += new System.EventHandler(this.heightMapOverlayCheck_Click);
 			// 
 			// heightMapPreview

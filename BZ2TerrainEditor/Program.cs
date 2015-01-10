@@ -31,10 +31,17 @@ namespace BZ2TerrainEditor
 		/// Entry point.
 		/// </summary>
 		[STAThread]
-		public static void Main()
+		public static void Main(string[] args)
 		{
 			Application.EnableVisualStyles();
-			Editor editor = new Editor();
+
+			Editor editor;
+
+			if (args.Length > 0)
+				editor = new Editor(args[0]);
+			else
+				editor = new Editor();
+
 			editor.Show();
 			Application.Run();
 		}

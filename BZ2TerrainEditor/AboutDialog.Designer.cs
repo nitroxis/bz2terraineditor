@@ -96,7 +96,7 @@
 			this.versionLabel.Name = "versionLabel";
 			this.versionLabel.Size = new System.Drawing.Size(198, 23);
 			this.versionLabel.TabIndex = 5;
-			this.versionLabel.Text = "Version {0}.{1}.";
+			this.versionLabel.Text = "Version {0}.{1}";
 			this.versionLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// AboutDialog

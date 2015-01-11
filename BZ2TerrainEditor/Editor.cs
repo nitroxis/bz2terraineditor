@@ -15,7 +15,9 @@ namespace BZ2TerrainEditor
 		#region Constants
 
 		private const string terrainFileFilter = "BZ2 terrain files (*.ter)|*.ter|All files (*.*)|*";
-		private const string imageFileFilter = "Portable Network Graphics (*.png)|*.png|Bitmap (*.bmp)|*.bmp|All Files (*.*|*";
+		private const string bitmapFileFilter = "Portable Network Graphics (*.png)|*.png|Bitmap (*.bmp)|*.bmp";
+		private const string heightMapFileFilter = "Portable Network Graphics (*.png)|*.png|Bitmap (*.bmp)|*.bmp|ASCII Portable Graymap (*.pgm)|*.pgm|Raw 16-bit data (*.*)|*";
+		
 
 		#endregion
 
@@ -364,7 +366,7 @@ namespace BZ2TerrainEditor
 			{
 				OpenFileDialog dialog = new OpenFileDialog();
 				dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
-				dialog.Filter = imageFileFilter;
+				dialog.Filter = bitmapFileFilter;
 				if (dialog.ShowDialog() != DialogResult.OK)
 					return null;
 
@@ -389,12 +391,15 @@ namespace BZ2TerrainEditor
 			try
 			{
 				SaveFileDialog dialog = new SaveFileDialog();
-				dialog.Filter = imageFileFilter;
+				dialog.Filter = bitmapFileFilter;
 				dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
 				if (dialog.ShowDialog() != DialogResult.OK)
 					return;
 
-				image.Save(dialog.FileName);
+				if (dialog.FilterIndex == 1)
+					image.Save(dialog.FileName, ImageFormat.Png);
+				else if (dialog.FilterIndex == 2)
+					image.Save(dialog.FileName, ImageFormat.Bmp);
 			}
 			catch (Exception ex)
 			{
@@ -552,22 +557,67 @@ namespace BZ2TerrainEditor
 			if(this.terrain == null)
 				return;
 
-			Bitmap bitmap = this.loadBitmap();
-			if (bitmap == null)
-				return;
 
-			HeightMapRangeDialog rangeDialog = new HeightMapRangeDialog();
-			if (rangeDialog.ShowDialog() != DialogResult.OK)
-				return;
+			try
+			{
+				OpenFileDialog dialog = new OpenFileDialog();
+				dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
+				dialog.Filter = heightMapFileFilter;
+				if (dialog.ShowDialog() != DialogResult.OK)
+					return;
 
-			bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
-			BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
-			byte[] buffer = new byte[data.Height * data.Stride];
-			Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+				if (dialog.FilterIndex <= 2)
+				{
+					Bitmap bitmap = new Bitmap(dialog.FileName);
+					if (bitmap.Width != this.terrain.Width || bitmap.Height != terrain.Height)
+					{
+						if (MessageBox.Show("The selected bitmap has a different size than the terrain and has to be rescaled.", "Import", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+							return;
 
-			for (int y = 0; y < data.Height; y++)
-				for (int x = 0; x < data.Width; x++)
-					terrain.HeightMap[x, y] = (short)((float)buffer[y * data.Stride + x * 3] * (float)(rangeDialog.Maximum - rangeDialog.Minimum) / 255.0f + (float)rangeDialog.Minimum);
+						resizeBitmap(bitmap, terrain.Width, terrain.Height);
+					}
+					
+					HeightMapRangeDialog rangeDialog = new HeightMapRangeDialog();
+					if (rangeDialog.ShowDialog() != DialogResult.OK)
+						return;
+
+					bitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+					BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+					byte[] buffer = new byte[data.Height * data.Stride];
+					Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
+
+					for (int y = 0; y < data.Height; y++)
+						for (int x = 0; x < data.Width; x++)
+							terrain.HeightMap[x, y] = (short)((float)buffer[y * data.Stride + x * 3] * (float)(rangeDialog.Maximum - rangeDialog.Minimum) / 255.0f + (float)rangeDialog.Minimum);
+				}
+				else if (dialog.FilterIndex == 3)
+				{
+					using (FileStream stream = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
+					{
+						NetPBM.ReadHeightmap(stream, this.terrain);
+					}
+				}
+				else if (dialog.FilterIndex == 4)
+				{
+					using (FileStream stream = new FileStream(dialog.FileName, FileMode.Open, FileAccess.Read))
+					{
+						byte[] row = new byte[terrain.Width * 2];
+
+						for (int y = 0; y < this.terrain.Height; y++)
+						{
+							if (stream.Read(row, 0, row.Length) < row.Length)
+								throw new Exception("Unexpected end of stream.");
+
+							for (int x = 0; x < this.terrain.Width; x++)
+								this.terrain.HeightMap[x, y] = (short)(row[x * 2] | row[x * 2 + 1] << 8);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(string.Format("Failed to load bitmap: {0}.", ex.Message));
+			}
 
 			this.changed = true;
 			this.terrain.UpdateMinMax();
@@ -579,70 +629,51 @@ namespace BZ2TerrainEditor
 			if (this.terrain == null)
 				return;
 
-			this.saveImage(this.heightMapPreview.Image);
-		}
-
-		private void heightMapImport16Bit_Click(object sender, EventArgs e)
-		{
-			if (this.terrain == null)
-				return;
-
-			OpenFileDialog dialog = new OpenFileDialog();
-			dialog.InitialDirectory = Properties.Settings.Default.OpenFileInitialDirectory;
-			if (dialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			FileInfo input = new FileInfo(dialog.FileName);
-			if (input.Length < this.terrain.Width * this.terrain.Height * 2)
+			try
 			{
-				MessageBox.Show("The selected file is too small.", "Import");
-				return;
-			}
+				SaveFileDialog dialog = new SaveFileDialog();
+				dialog.Filter = heightMapFileFilter;
+				dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
+				if (dialog.ShowDialog() != DialogResult.OK)
+					return;
 
-			using (Stream stream = input.OpenRead())
-			{
-				byte[] row = new byte[terrain.Width * 2];
-
-				for (int y = 0; y < this.terrain.Height; y++)
+				if (dialog.FilterIndex == 1)
 				{
-					if (stream.Read(row, 0, row.Length) < row.Length)
-						throw new Exception("Unexpected end of stream.");
-
-					for (int x = 0; x < this.terrain.Width; x++)
-						this.terrain.HeightMap[x, y] = (short)(row[x * 2] | row[x * 2 + 1] << 8);
+					this.heightMapPreview.Image.Save(dialog.FileName, ImageFormat.Png);
 				}
-			}
-
-			this.changed = true;
-			this.terrain.UpdateMinMax();
-			this.initialize();
-		}
-
-		private void HeightMapExport16Bit_Click(object sender, EventArgs e)
-		{
-			if (this.terrain == null)
-				return;
-
-			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.InitialDirectory = Properties.Settings.Default.SaveFileInitialDirectory;
-			if (dialog.ShowDialog() != DialogResult.OK)
-				return;
-
-			FileInfo output = new FileInfo(dialog.FileName);
-			using (Stream stream = output.Create())
-			{
-				byte[] row = new byte[terrain.Width * 2];
-				
-				for (int y = 0; y < this.terrain.Height; y++)
+				else if (dialog.FilterIndex == 2)
 				{
-					for (int x = 0; x < this.terrain.Width; x++)
+					this.heightMapPreview.Image.Save(dialog.FileName, ImageFormat.Bmp);	
+				}
+				else if (dialog.FilterIndex == 3)
+				{
+					using (FileStream stream = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
 					{
-						row[x * 2 + 0] = unchecked((byte)(this.terrain.HeightMap[x, y] & 0xFF));
-						row[x * 2 + 1] = unchecked((byte)(this.terrain.HeightMap[x, y] >> 8));
+						NetPBM.WriteHeightmap(stream, this.terrain);
 					}
-
-					stream.Write(row, 0, row.Length);
 				}
+				else if (dialog.FilterIndex == 4)
+				{
+					using (FileStream stream = new FileStream(dialog.FileName, FileMode.Create, FileAccess.Write))
+					{
+						byte[] row = new byte[terrain.Width * 2];
+
+						for (int y = 0; y < this.terrain.Height; y++)
+						{
+							for (int x = 0; x < this.terrain.Width; x++)
+							{
+								row[x * 2 + 0] = unchecked((byte)(this.terrain.HeightMap[x, y] & 0xFF));
+								row[x * 2 + 1] = unchecked((byte)(this.terrain.HeightMap[x, y] >> 8));
+							}
+
+							stream.Write(row, 0, row.Length);
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(string.Format("Failed to save image: {0}.", ex.Message));
 			}
 		}
 
@@ -655,26 +686,7 @@ namespace BZ2TerrainEditor
 			if (dialog.ShowDialog() != DialogResult.OK)
 				return;
 
-			int translation = dialog.Value;
-
-			for (int y = 0; y < this.terrain.Height; y++)
-			{
-				for (int x = 0; x < this.terrain.Width; x++)
-				{
-					int newValue = this.terrain.HeightMap[x, y];
-					newValue += translation;
-
-					if(newValue < short.MinValue) 
-						newValue = short.MinValue;
-					else if (newValue > short.MaxValue) 
-						newValue = short.MaxValue;
-
-					this.terrain.HeightMap[x, y] = (short)newValue;
-				}
-			}
-
-			this.terrain.UpdateMinMax();
-
+			this.terrain.Translate(dialog.Value);
 			this.initialize();
 			this.changed = true;
 		}

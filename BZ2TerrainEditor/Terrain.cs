@@ -406,6 +406,27 @@ namespace BZ2TerrainEditor
 			return terrain;
 		}
 
+		public void Translate(int translation)
+		{
+			for (int y = 0; y < this.Height; y++)
+			{
+				for (int x = 0; x < this.Width; x++)
+				{
+					int newValue = this.HeightMap[x, y];
+					newValue += translation;
+
+					if (newValue < short.MinValue)
+						newValue = short.MinValue;
+					else if (newValue > short.MaxValue)
+						newValue = short.MaxValue;
+
+					this.HeightMap[x, y] = (short)newValue;
+				}
+			}
+
+			this.UpdateMinMax();
+		}
+
 		#endregion
 	}
 }

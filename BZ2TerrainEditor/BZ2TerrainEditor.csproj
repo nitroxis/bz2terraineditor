@@ -81,8 +81,14 @@
     <Compile Include="ImageViewer.Designer.cs">
       <DependentUpon>ImageViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="NetPBM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RGB.cs" />
     <Compile Include="SizeDialog.cs">
       <SubType>Form</SubType>
@@ -108,14 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="SizeDialog.resx">
       <DependentUpon>SizeDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -169,8 +170,6 @@
     <None Include="Resources\document-export-2.png" />
     <None Include="Resources\document-export-1.png" />
     <None Include="Resources\document-export-0.png" />
-    <None Include="Resources\document-import-16.png" />
-    <None Include="Resources\document-export-16.png" />
     <None Include="Resources\information.png" />
     <None Include="Resources\water-import.png" />
     <None Include="Resources\water-export.png" />

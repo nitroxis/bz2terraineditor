@@ -37,7 +37,6 @@
 			this.heightMapGroup = new System.Windows.Forms.GroupBox();
 			this.heightMapToolbar = new System.Windows.Forms.ToolStrip();
 			this.heightMapSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.heightMapSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.colorMapGroup = new System.Windows.Forms.GroupBox();
 			this.colorMapToolbar = new System.Windows.Forms.ToolStrip();
 			this.normalMapGroup = new System.Windows.Forms.GroupBox();
@@ -62,8 +61,6 @@
 			this.tileMapSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.heightMapImport = new System.Windows.Forms.ToolStripButton();
 			this.heightMapExport = new System.Windows.Forms.ToolStripButton();
-			this.heightMapImport16Bit = new System.Windows.Forms.ToolStripButton();
-			this.HeightMapExport16Bit = new System.Windows.Forms.ToolStripButton();
 			this.heightMapTranslate = new System.Windows.Forms.ToolStripButton();
 			this.heightMapOverlayCheck = new System.Windows.Forms.ToolStripButton();
 			this.heightMapPreview = new System.Windows.Forms.PictureBox();
@@ -224,9 +221,6 @@
             this.heightMapImport,
             this.heightMapExport,
             this.heightMapSeparator1,
-            this.heightMapImport16Bit,
-            this.HeightMapExport16Bit,
-            this.heightMapSeparator2,
             this.heightMapTranslate,
             this.heightMapOverlayCheck,
             this.heightMapMinMaxLabel});
@@ -240,11 +234,6 @@
 			// 
 			this.heightMapSeparator1.Name = "heightMapSeparator1";
 			this.heightMapSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
-			// heightMapSeparator2
-			// 
-			this.heightMapSeparator2.Name = "heightMapSeparator2";
-			this.heightMapSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
 			// colorMapGroup
 			// 
@@ -505,26 +494,6 @@
 			this.heightMapExport.Size = new System.Drawing.Size(23, 22);
 			this.heightMapExport.Text = "Export";
 			this.heightMapExport.Click += new System.EventHandler(this.heightMapExport_Click);
-			// 
-			// heightMapImport16Bit
-			// 
-			this.heightMapImport16Bit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.heightMapImport16Bit.Image = global::BZ2TerrainEditor.Properties.Resources.document_import_16;
-			this.heightMapImport16Bit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.heightMapImport16Bit.Name = "heightMapImport16Bit";
-			this.heightMapImport16Bit.Size = new System.Drawing.Size(23, 22);
-			this.heightMapImport16Bit.Text = "Import 16 Bit Raw";
-			this.heightMapImport16Bit.Click += new System.EventHandler(this.heightMapImport16Bit_Click);
-			// 
-			// HeightMapExport16Bit
-			// 
-			this.HeightMapExport16Bit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.HeightMapExport16Bit.Image = global::BZ2TerrainEditor.Properties.Resources.document_export_16;
-			this.HeightMapExport16Bit.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.HeightMapExport16Bit.Name = "HeightMapExport16Bit";
-			this.HeightMapExport16Bit.Size = new System.Drawing.Size(23, 22);
-			this.HeightMapExport16Bit.Text = "Export 16 Bit Raw";
-			this.HeightMapExport16Bit.Click += new System.EventHandler(this.HeightMapExport16Bit_Click);
 			// 
 			// heightMapTranslate
 			// 
@@ -1231,8 +1200,6 @@
 		private System.Windows.Forms.ToolStripButton cellMapExportBuilding;
 		private System.Windows.Forms.ToolStripButton cellMapExportLava;
 		private System.Windows.Forms.ToolStripSeparator heightMapSeparator1;
-		private System.Windows.Forms.ToolStripButton heightMapImport16Bit;
-		private System.Windows.Forms.ToolStripButton HeightMapExport16Bit;
 		private System.Windows.Forms.ToolStripSeparator cellMapSeparator1;
 		private System.Windows.Forms.ToolStripSeparator cellMapSeparator2;
 		private System.Windows.Forms.ToolStripSeparator cellMapSeparator3;
@@ -1263,7 +1230,6 @@
 		private System.Windows.Forms.ToolStripSeparator tileMapSeparator3;
 		private System.Windows.Forms.ToolStripButton tileMap3Import;
 		private System.Windows.Forms.ToolStripButton tileMap3Export;
-		private System.Windows.Forms.ToolStripSeparator heightMapSeparator2;
 		private System.Windows.Forms.ToolStripButton heightMapTranslate;
 		private System.Windows.Forms.ToolStripButton heightMapOverlayCheck;
 		private System.Windows.Forms.PictureBox heightMapOverlay;

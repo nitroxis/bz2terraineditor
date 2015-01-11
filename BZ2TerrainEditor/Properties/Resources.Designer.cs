@@ -193,16 +193,6 @@ namespace BZ2TerrainEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap document_export_16 {
-            get {
-                object obj = ResourceManager.GetObject("document-export-16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap document_export_2 {
             get {
                 object obj = ResourceManager.GetObject("document-export-2", resourceCulture);
@@ -246,16 +236,6 @@ namespace BZ2TerrainEditor.Properties {
         internal static System.Drawing.Bitmap document_import_1 {
             get {
                 object obj = ResourceManager.GetObject("document-import-1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap document_import_16 {
-            get {
-                object obj = ResourceManager.GetObject("document-import-16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
